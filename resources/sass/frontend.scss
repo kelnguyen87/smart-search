@@ -1,0 +1,22 @@
+/*--- Nav Top ----*/
+.navbar-inverse{
+  border-bottom: .1rem solid #dfe3e8;
+  padding: .8rem 1.6rem;
+  background:#F4F6F8;
+  .btn-default--help{margin-left: 20px;}
+}
+.wrapper{margin-top:52px;}
+.skin-blue .main-header .logo{    border-bottom: 1px solid rgba(0,0,0,0.1);}
+.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side{background: #367fa9;}
+.skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a, .skin-blue .sidebar-menu > li.menu-open > a {
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+}
+.skin-blue .sidebar-menu > li.active > a{border:none;}
+.skin-blue .sidebar a{    color: #e2e2e2;}
+.skin-blue .sidebar-menu > li > a{
+  margin-bottom: 1px;
+}
+.sidebar-menu > li > a > .fa, .sidebar-menu > li > a > .glyphicon, .sidebar-menu > li > a > .ion {
+  font-size: 18px;width:25px;
+}
