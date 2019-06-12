@@ -33,12 +33,9 @@ class AddPlanToShopsTableAndChargesTable extends Migration
      */
     public function down()
     {
-        Schema::table('charges', function (Blueprint $table) {
-            $table->dropColumn(['plan_id']);
-        });
+        Schema::dropIfExists('charges');
+        Schema::dropIfExists('shops');
 
-        Schema::table('shops', function (Blueprint $table) {
-            $table->dropColumn(['plan_id']);
-        });
+
     }
 }

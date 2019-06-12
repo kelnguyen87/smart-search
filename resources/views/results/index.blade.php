@@ -4,10 +4,10 @@
         <div class="content-header ">
             <div class="row align-items-center">
                 <div class="col-md-7">
-                    <H2> Search results widget</H2>
+                    <H2> Search Setting</H2>
                 </div>
                 <div class="col-md-5 text-right">
-                    <button class="btn btn-default" id="discard">Discard</button>
+                  <!--  <button class="btn btn-default" id="discard">Discard</button>-->
                     <button class="btn btn-primary" id="save">Save</button>
                 </div>
             </div>
@@ -30,20 +30,23 @@
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Show price</label>
                                 <div class="col-sm-10">
-                                    <div class="checkbox"> <label> <input type="checkbox" name="results_product_price" value="Y" checked="checked"> </label> </div>
-                                 </div>
+
+                                    <div class="checkbox"><label>{!! Form::checkbox('general_product_price','yes', $data['general_product_price']) !!}</label>
+                                    </div>
+
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Show compare at price</label>
                                 <div class="col-sm-10">
-                                    <div class="checkbox"> <label> <input type="checkbox" name="results_product_compare" value="Y" checked="checked"> </label> </div>
+                                    <div class="checkbox"><label>{!! Form::checkbox('general_product_compare','yes', $data['general_product_compare']) !!}</label></div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Show SKU</label>
                                 <div class="col-sm-10">
-                                    <div class="checkbox"> <label> <input type="checkbox" name="results_product_sku" value="Y" checked="checked"> </label> </div>
+                                    <div class="checkbox"><label>{!! Form::checkbox('general_product_sku','yes', $data['general_product_sku']) !!}</label></div>
                                 </div>
                             </div>
 

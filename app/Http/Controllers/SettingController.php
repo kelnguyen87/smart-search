@@ -8,13 +8,12 @@ use OhMyBrew\ShopifyApp\ShopifyApp;
 
 class SettingController extends Controller
 {
-    const CONFIG_PATH = [
-        'general_title'=>'general_title',
-        'general_description'=>'general_description',
-        'general_button_title'=>'general_button_title',
-        'added_alert_text'=>'added_alert_text',
-        'continue_shop_text'=>'continue_shop_text',
-        'go_cart_text'=>'go_cart_text'
+    const CONFIG_NAME = [
+        
+        'general_product_price'=>'general_product_price',
+        'general_product_compare'=>'general_product_compare',
+        'general_product_sku'=>'general_product_sku',
+
     ];
     /**
      * @var Config
@@ -39,23 +38,13 @@ class SettingController extends Controller
 
     public function index()
     {
-        /*$shop = $this->shop->shop();
-        $configModel = $this->config;
-
-        $configData = [];
-        foreach (self::CONFIG_PATH as $value){
-            $configValue = $configModel->where(['path'=>$value,'shop_id'=>$shop->id])->first()->value ?? '';
-
-            $configData[$value] = $configValue;
-        }
-        return view('config.index')->with(['data'=>$configData]);*/
 
         $shop = $this->shop->shop();
         $configModel = $this->config;
 
         $configData = [];
-        foreach (self::CONFIG_PATH as $value){
-            $configValue = $configModel->where(['path'=>$value,'shop_id'=>$shop->id])->first()->value ?? '';
+        foreach (self::CONFIG_NAME as $value){
+            $configValue = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first()->value ?? '';
 
             $configData[$value] = $configValue;
         }
@@ -66,10 +55,12 @@ class SettingController extends Controller
     {
         $shop = $this->shop->shop();
         $configModel = $this->config;
-        foreach (self::CONFIG_PATH as $value){
-            $dataModel = $configModel->where(['path'=>$value,'shop_id'=>$shop->id])->first() ?? new Config;
+        foreach (self::CONFIG_NAME as $value){
+
+            $dataModel = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first() ?? new Config;
             $dataFill = $request->input($value) ?? '';
-            $dataModel->fill(['path'=>$value,'shop_id'=>$shop->id,'value'=>$dataFill])->save();
+            //dd($request->input('general_product_price') );
+            $dataModel->fill(['name'=>$value,'shop_id'=>$shop->id,'value'=>$dataFill])->save();
         }
         return back()->with('status','Your settings have been successfully saved');
     }

@@ -15,9 +15,14 @@
 Route::group(['middleware' => 'auth.shop'], function () {
 
     Route::get('/', 'ReportController@getDashboard')->name('home');
-
-    Route::get('offer/new','OfferController@new')->name('offer/new');
+    Route::get('setting','SettingController@index');
+    Route::post('setting/save','SettingController@save');
     Route::get('offer/list','OfferController@list')->name('offer/list');
+
+    Route::get('report/getGeneral','ReportController@getGeneralData');
+    /*
+    Route::get('offer/new','OfferController@new')->name('offer/new');
+
     Route::post('offer/getTable','OfferController@getTable')->name('offer/getTable');
     Route::post('offer/create','OfferController@offerCreate')->name('offer/create');
     Route::get('offer/edit/{id}','OfferController@edit')->name('offer/getEdit');
@@ -27,14 +32,11 @@ Route::group(['middleware' => 'auth.shop'], function () {
 
     Route::get('product/getForm','ProductController@getSelectFormData');
     Route::post('product/filter','ProductController@getProductByFilter')->name('product/filter');
-    Route::get('setting','SettingController@index');
-    Route::post('setting/save','SettingController@save');
 
-    Route::get('report/getGeneral','ReportController@getGeneralData');
     Route::get('report/index','ReportController@index');
     Route::get('report/getTable','ReportController@getOfferTable');
     Route::get('report/chartData','ReportController@getProductChartData');
     Route::get('report/invoiceList','InvoiceChargeController@showInvoiceList');
     Route::get('set-plans','PricePlanController@setPlans');
-    Route::get('plan/list','PricePlanController@listPlans');
+    Route::get('plan/list','PricePlanController@listPlans');*/
 });

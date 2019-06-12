@@ -15,7 +15,7 @@ class CreateConfigDataTable extends Migration
     {
         Schema::create('config_data', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('path',255);
+            $table->string('name',255);
             $table->text('value');
             $table->unsignedInteger('shop_id');
             $table->timestamps();
