@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth.shop'], function () {
     Route::get('offer/list','OfferController@list')->name('offer/list');
 
     Route::get('report/getGeneral','ReportController@getGeneralData');
+
     /*
     Route::get('offer/new','OfferController@new')->name('offer/new');
 

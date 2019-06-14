@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Config;
 use OhMyBrew\ShopifyApp\ShopifyApp;
 
@@ -13,6 +15,12 @@ class SettingController extends Controller
         'general_product_price'=>'general_product_price',
         'general_product_compare'=>'general_product_compare',
         'general_product_sku'=>'general_product_sku',
+        'general_product_per'=>'general_product_per',
+        'general_product_title'=>'general_product_title',
+        'general_product_gridview'=>'general_product_gridview',
+        'general_product_button'=>'general_product_button',
+        'general_product_zero_price'=>'general_product_zero_price',
+        'general_product_sorting'=>'general_product_sorting',
 
     ];
     /**
@@ -55,6 +63,8 @@ class SettingController extends Controller
     {
         $shop = $this->shop->shop();
         $configModel = $this->config;
+
+
         foreach (self::CONFIG_NAME as $value){
 
             $dataModel = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first() ?? new Config;
@@ -64,5 +74,26 @@ class SettingController extends Controller
         }
         return back()->with('status','Your settings have been successfully saved');
     }
+
+    public function getSetting(Request $request)
+    {
+
+        $domain = $request->get('domain');
+
+        $shopModel = config('shopify-app.shop_model');
+        $configModel = $this->config;
+        $shop = $shopModel::withTrashed()->firstOrCreate(['shopify_domain' => $domain]);
+
+        $configData = [];
+        foreach (self::CONFIG_NAME as $value){
+            $configValue = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first()->value ?? '';
+
+            $configData[$value] = $configValue;
+        }
+       // $view =  view('results.settingjson')->with(['data'=>$configData]);
+        return response()->json(['success' => true, 'data' => $configData]);
+
+    }
+
 
 }

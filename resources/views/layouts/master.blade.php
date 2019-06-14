@@ -88,7 +88,7 @@ desired effect
                 <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}"><i class="ion ion-ios-information-outline"></i><span>Dashboard</span></a></li>
                 <li class="{{ Request::is('offer/list') ? 'active' : '' }}"><a href="{{ url('/offer/list') }}"><i class="ion ion-ios-analytics"></i><span>Analytics </span></a></li>
                 <li class="{{ Request::is('setting') ? 'active' : '' }}"><a href="{{ url('/setting') }}"><i class="ion ion-ios-search-strong"></i><span>Settings</span></a></li>
-                <!--<li class="{{ Request::is('report/index') ? 'active' : '' }}"><a href="{{ url('/report/index') }}"><i class="ion ion-ios-color-filter-outline"></i><span>Filter options</span></a></li>-->
+                <!--<li class="{{ Request::is('proxy') ? 'active' : '' }}"><a href="{{ url('proxy') }}"><i class="ion ion-ios-color-filter-outline"></i><span>Proxy</span></a></li>-->
                 <!--<li class="{{ Request::is('report/invoiceList') ? 'active' : '' }}"><a href="{{ url('/report/invoiceList') }}"><span>Invoices</span></a></li>-->
             <!--<li class="{{ Request::is('plan/list') ? 'active' : '' }}"><a href="{{ url('/plan/list') }}">Price Plans</span></a></li>-->
             </ul>

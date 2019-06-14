@@ -54,11 +54,13 @@ class WidgetController extends Controller
         $triggerType = $request->get('type');
         Log::info('$triggerType: '.$triggerType);
         $shop = $shopModel::withTrashed()->firstOrCreate(['shopify_domain' => $domain]);
+
         //handle product data
         $listProductId = $this->getProductsByShopifyId($productId);
         Log::info('$listProductId: '.print_r($listProductId,true));
         $offerAvailbleId = $this->getOfferListByProductList($listProductId,$triggerType,'product-detail');
         Log::info('$offerAvailbleId: '.print_r($offerAvailbleId,true));
+
         //check product have offer
         if(empty($offerAvailbleId)){
             return response()->json(['success' =>  false]);
@@ -67,6 +69,7 @@ class WidgetController extends Controller
         $widgetTitle = $this->getWidgetTitle($offerAvailbleId,$shop);
         $widgetDescription = $this->getWidgetDescription($offerAvailbleId,$shop);
         $listRenderProduct = $this->getListProductToRender($offerAvailbleId);
+
         $buttonTitle = $this->config->where(['path'=>SettingController::CONFIG_PATH['general_button_title'],'shop_id'=>$shop->id])->first()->value ?? 'Add to cart';
         $addedAlert = $this->config->where(['path'=>SettingController::CONFIG_PATH['added_alert_text'],'shop_id'=>$shop->id])->first()->value ?? 'Product was successfully added!';
         $continueText = $this->config->where(['path'=>SettingController::CONFIG_PATH['continue_shop_text'],'shop_id'=>$shop->id])->first()->value ?? 'Continue to shop';
@@ -84,6 +87,7 @@ class WidgetController extends Controller
             $str = 'before';
             $transformData = $this->transformProductData($data,$listRenderProduct['variant_id']);
             $str = 'after';
+
             //render view
             $view = view('widget.widgetUpsell')
                 ->with(['data' => $data,
@@ -97,11 +101,12 @@ class WidgetController extends Controller
                     'goCartText' => $goCartText,
                     'type'=>$triggerType])
                 ->render();
-            return response()->json(['success' => true, 'view' => $view]);
+                return response()->json(['success' => true, 'view' => $view]);
         } catch (\Throwable $e) {
             Log::error($e);
             return response()->json(['success' =>  false, 'view' => $str.json_encode($data)]);
         }
+
     }
 
     public function getCartWidget(Request $request)
