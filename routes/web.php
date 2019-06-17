@@ -15,13 +15,15 @@
 Route::group(['middleware' => 'auth.shop'], function () {
 
     Route::get('/', 'ReportController@getDashboard')->name('home');
+    //Route::get('report/getGeneral','ReportController@getGeneralData');
     Route::get('setting','SettingController@index');
     Route::post('setting/save','SettingController@save');
+
+
+   
+    /*
     Route::get('offer/list','OfferController@list')->name('offer/list');
 
-    Route::get('report/getGeneral','ReportController@getGeneralData');
-
-    /*
     Route::get('offer/new','OfferController@new')->name('offer/new');
 
     Route::post('offer/getTable','OfferController@getTable')->name('offer/getTable');

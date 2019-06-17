@@ -470,3 +470,42 @@ hr {
     width: 100px;
     margin: auto;
 }
+
+#content_chart{margin-bottom: 35px;}
+
+.snize-graph-legend-item{
+    min-width: 115px;
+    height: 50px;
+    background: #00bcd4;
+    float: left;
+    cursor: pointer;
+    position: relative;
+
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+.snize-graph-legend-item-label {
+    color: #fff;
+    font-size: 11px;
+    line-height: 15px;
+}
+.snize-graph-legend-item-value {
+    color: #fff;
+    font-size: 22px;
+    line-height: 24px;
+    font-weight: 300;
+}
+.snize-graph-legend-item.snize-current:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    border-top-color: #00bcd4;
+    margin-left: -9px;
+    border-width: 9px;
+}

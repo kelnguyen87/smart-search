@@ -6,32 +6,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use OhMyBrew\ShopifyApp\ShopifyApp;
-use App\Offer;
-use App\Product;
+use App\Dashboard;
 use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
     /**
-     * @var Offer
+     * @var Config
      */
-    protected $offer;
+    protected $config;
     /**
-     * @var Product
+     * @var ShopifyApp
      */
-    protected $product;
+    protected $shop;
 
     /**
-     * ReportController constructor.
-     * @param Offer $offer
-     * @param Product $product
+     * SettingController constructor.
+     * @param Config $config
+     * @param ShopifyApp $shop
      */
-    public function __construct(Offer $offer, Product $product)
+    public function __construct(Dashboard $config,ShopifyApp $shop)
     {
 
-        $this->offer = $offer;
-        $this->product = $product;
-
+        $this->config = $config;
+        $this->shop = $shop;
     }
 
     public function index()
@@ -105,33 +103,50 @@ class ReportController extends Controller
     }
     public function getDashboard()
     {
-        /*$shop = \ShopifyApp::shop();
-        $allProduct = $shop->api()->rest('GET', "/admin/products.json")->body->products;
+        $shop = \ShopifyApp::shop();
+        $configModel = $this->config;
 
-        $allInternalProduct = $this->product->all();
+        $dataSearchQueries = $configModel->where(['result'=>'yes','shop_id'=>$shop->id])->paginate(10);
+        $dataSearchNoResult = $configModel->where(['result'=>' ','shop_id'=>$shop->id])->paginate(10);
 
-        $internalProducts = [];
-        foreach ($allInternalProduct as $value) {
-            $internalProducts[$value->id] = $value->variant_id;
-        }
-        $returnData = [];
-        foreach ($allProduct as $value) {
-            //dd($value->variants);
-            foreach ($value->variants as $item) {
-                if (in_array($item->id, $internalProducts)) {
-                    $returnData[array_search($item->id, $internalProducts)] = "$value->title - $item->title";
+        return view('welcome')->with(['dataSearchQueries'=>$dataSearchQueries,'dataSearchNoResult'=>$dataSearchNoResult]);;
+
+
+    }
+
+    public function addGetSetting(Request $request)
+    {
+
+        $domain = $request->get('domain');
+        $dataPhrase = $request->get('phrase');
+        $dataResults = $request->get('results');
+        $shopModel = config('shopify-app.shop_model');
+        $shop = $shopModel::withTrashed()->firstOrCreate(['shopify_domain' => $domain]);
+
+        $insertData = [];
+        $currentDate = Carbon::now();
+        $dataConfig = $this->config::all();
+
+        foreach ($dataConfig as $value) {
+            dd($value);
+                if (in_array($value, $dataPhrase)) {
+
                 }
-            }
+
         }
 
-        return $returnData;*/
-        return view('welcome');
+        array_push($insertData,['phrase'=>$dataPhrase,'count'=>'9','result'=>$dataResults,'shop_id'=>$shop->id,'created_at'=>$currentDate]);
+
+        DB::table('report_dashboard')->insert($insertData);
+
+        return ['insertData'=>$insertData];
     }
 
     public function getProductName()
     {
         $shop = \ShopifyApp::shop();
-        $allProduct = $shop->api()->rest('GET', "/admin/products.json")->body->products;
+        $currency = $shop->api()->rest('POST', '/admin/api/2019-04/metafields.json')->body->shop->currency;
+
         $allInternalProduct = $this->product->all();
         $internalProducts = [];
         foreach ($allInternalProduct as $value) {
@@ -148,46 +163,14 @@ class ReportController extends Controller
         return $returnData;
     }
 
-    public function getOfferTable(Request $request)
-    {
-        $shop = \ShopifyApp::shop();
-        $offerList = DB::table('offer')
-            ->select('offer.id', 'offer.name', 'offer.type', DB::raw('count(report_view.id) as total'))
-            ->where('offer.shop_id', $shop->id)
-            ->leftJoin('report_view', 'report_view.offer_id', '=', 'offer.id')
-            ->groupBy('offer.id', 'offer.name', 'offer.type')
-            ->paginate(5);
-        $cart = DB::table('report_sale')
-            ->select('offer_id',DB::raw('count(offer_id) as total'), DB::raw('sum(amount) as amount'))
-            ->where('shop_id', $shop->id)
-            ->groupBy('offer_id')
-            ->get();
-        $purchase = DB::table('report_sale')
-            ->select('*')
-            ->where('is_purchase',1)
-            ->leftJoin('offer','report_sale.offer_id', '=', 'offer.id')
-            ->select('offer_id',DB::raw('count(offer_id) as total'), DB::raw('sum(amount) as amount'))
-            ->where('report_sale.shop_id', $shop->id)
-            ->groupBy('report_sale.offer_id')
-            ->get();
-        $appendData = [];
-        foreach ($cart as $value){
-            $appendData[$value->offer_id]['added'] = $value->total;
-        }
-        foreach ($purchase as $value){
-            $appendData[$value->offer_id]['purchase'] = $value->total;
-            $appendData[$value->offer_id]['amount'] = $value->amount;
-        }
-        $view = view('report.offerTable')->with(['offerList' => $offerList,'append_data'=>$appendData])->render();
-        return response()->json(['success' => true, 'view' => $view]);
-    }
 
 
 
     public function getGeneralData(Request $request)
     {
         $shop = \ShopifyApp::shop();
-        $currency = $shop->api()->rest('GET', '/admin/shop.json')->body->shop->currency;
+        $currency = $shop->api()->rest('POST', '/admin/api/2019-04/metafields.json')->body->shop->currency;
+		
         $startDay = Carbon::parse($request->get('start'))->toDateTimeString();
         Log::info('$startDay: '.$startDay);
         $endDay = Carbon::parse($request->get('end'))->addDay()->toDateTimeString();
@@ -236,6 +219,7 @@ class ReportController extends Controller
             'revenue' => round($totalRevenue, 2) . " $currency",
             'conversion' => round($conversion, 2) . '%'
         ]);
+
     }
 
     public function getViewByOffer($startDate, $endDate, $sort)

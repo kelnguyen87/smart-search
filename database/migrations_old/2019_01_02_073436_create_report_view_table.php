@@ -13,16 +13,15 @@ class CreateReportViewTable extends Migration
      */
     public function up()
     {
-        Schema::create('report_dashboard', function (Blueprint $table) {
+        Schema::create('report_view', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('phrase',255);
-            $table->unsignedInteger('count');
-            $table->text('result');
+            $table->unsignedInteger('offer_id');
             $table->unsignedInteger('shop_id');
-            $table->timestamps();
+            $table->dateTime('created_at');
         });
-
-        Schema::table('report_dashboard',function (Blueprint $table){
+        Schema::table('report_view',function (Blueprint $table){
+            $table->foreign('offer_id')->references('id')
+                ->on('offer')->onDelete('cascade');
             $table->foreign('shop_id')->references('id')
                 ->on('shops')->onDelete('cascade');
         });
@@ -35,6 +34,6 @@ class CreateReportViewTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('report_dashboard');
+        Schema::dropIfExists('report_view');
     }
 }
