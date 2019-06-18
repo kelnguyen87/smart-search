@@ -54,7 +54,7 @@ class ReportController extends Controller
             ->where('created_at', '<', $endDay)
             ->get();
 
-        
+
         $productAmountData = [];
 
 

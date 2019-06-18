@@ -75,12 +75,29 @@ class SettingController extends Controller
         return back()->with('status','Your settings have been successfully saved');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getSetting(Request $request)
     {
         $domain = $request->get('domain');
         $shopModel = config('shopify-app.shop_model');
         $configModel = $this->config;
         $shop = $shopModel::withTrashed()->firstOrCreate(['shopify_domain' => $domain]);
+
+        /*$data = array(
+            "namespace": "inventory",
+                "key": "warehouse",
+                "value": 25,
+                "value_type": "integer"
+            );
+
+
+        $request = $shop->api()->rest('POST', '/admin/api/2019-04/metafields.json',$data);
+        //$rawVendor = $request->body->products;
+        dd($request);*/
+
         $configData = [];
         foreach (self::CONFIG_NAME as $value){
             $configValue = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first()->value ?? '';
@@ -89,6 +106,7 @@ class SettingController extends Controller
 
         return response()->json(['success' => true, 'data' => $configData]);
     }
+
 
 
 }

@@ -21,12 +21,9 @@ Route::group(['middleware' => 'auth.shop'], function () {
     Route::post('setting/save','SettingController@save');
 
 
-   
     /*
     Route::get('offer/list','OfferController@list')->name('offer/list');
-
     Route::get('offer/new','OfferController@new')->name('offer/new');
-
     Route::post('offer/getTable','OfferController@getTable')->name('offer/getTable');
     Route::post('offer/create','OfferController@offerCreate')->name('offer/create');
     Route::get('offer/edit/{id}','OfferController@edit')->name('offer/getEdit');

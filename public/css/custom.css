@@ -452,13 +452,17 @@ hr {
 }
 /* cavas_report */
 .cavas_report {
-    margin: 0 0 35px;
-    background:white;
+    margin: 0 auto 35px;
+
     padding: 20px 0;
     max-width: 800px;
-    border-top: 3px solid #d2d6de;
-}
 
+}
+.cavas_report--main{
+    border-top: 3px solid #d2d6de;
+    background:white;
+    display: block;
+}
 .product-list .btn-primary {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;

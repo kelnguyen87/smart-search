@@ -24,10 +24,12 @@
 
         <div class="row">
             <div class="col-sm-12 col-xs-12">
-                <div class="cavas_report">
-                    <canvas id="added-chart" style="height: 265px; width: 530px;" width="530" height="265"></canvas>
-                    <div>
-                        <ul id="added-chart-legend"></ul>
+                <div class="cavas_report--main">
+                    <div class="cavas_report">
+                        <canvas id="added-chart" style="height: 265px; width: 530px;" width="530" height="265"></canvas>
+                        <div>
+                            <ul id="added-chart-legend"></ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -291,9 +293,9 @@
                         var addedChartCanvas = $('#added-chart').get(0).getContext('2d');
                         var addedChart = new Chart(addedChartCanvas);
                         addedChart.Line(areaChartData, pieOptions);
-                        $.each(amountChartData, function (i, val) {
+                       /* $.each(amountChartData, function (i, val) {
                             fillLegend(i, val,'#added-chart');
-                        });
+                        });*/
                     }
 
                 });
