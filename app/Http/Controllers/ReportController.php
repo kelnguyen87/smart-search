@@ -37,68 +37,34 @@ class ReportController extends Controller
         return view('report.index');
     }
 
-    public function getProductChartData()
+    public function getProductChartData(Request $request)
     {
         $shop = \ShopifyApp::shop();
-        $productAddedTime = DB::table('report_sale')
-            ->select('report_sale.product_id', DB::raw('count(report_sale.id) as total'))
-            ->where('report_sale.shop_id', $shop->id)
-            ->groupBy('report_sale.product_id')
-            ->orderBy('total','DESC')
-            ->limit(5)
-            ->get();
-        $productAmount = DB::table('report_sale')
-            ->select('report_sale.product_id', DB::raw('sum(report_sale.amount) as total'))
-            ->where('report_sale.shop_id', $shop->id)
-            ->groupBy('report_sale.product_id')
-            ->orderBy('total','DESC')
-            ->limit(5)
-            ->get();
-        $purchaseTime = DB::table('report_sale')
-            ->select('product_id','shop_id','is_purchase')
-            ->where('is_purchase',1)
-            ->select('report_sale.product_id', DB::raw('count(report_sale.id) as total'))
-            ->where('report_sale.shop_id', $shop->id)
-            ->groupBy('report_sale.product_id')
-            ->orderBy('total','DESC')
-            ->limit(5)
-            ->get();
-        $purchaseAmount = DB::table('report_sale')
-            ->select('product_id','shop_id','is_purchase')
-            ->where('is_purchase',1)
-            ->select('report_sale.product_id', DB::raw('sum(report_sale.amount) as total'))
-            ->where('report_sale.shop_id', $shop->id)
-            ->groupBy('report_sale.product_id')
-            ->orderBy('total','DESC')
-            ->limit(5)
+        $startDay = Carbon::parse($request->get('start'))->toDateTimeString();
+
+        Log::info('$startDay: '.$startDay);
+        $endDay = Carbon::parse($request->get('end'))->addDay()->toDateTimeString();
+        Log::info('$endDay: '.$endDay);
+
+
+        $viewDashboard = DB::table('report_dashboard')
+            ->select('phrase','result')
+            ->where('shop_id', $shop->id)
+            ->where('created_at', '>=', $startDay)
+            ->where('created_at', '<', $endDay)
             ->get();
 
-        $listProductName = $this->getProductName();
-        $productAddedData = [];
+        
         $productAmountData = [];
-        $purchaseTimeData = [];
-        $purchaseAmountData = [];
-        foreach ($productAddedTime as $value) {
+
+
+        foreach ($viewDashboard as $value) {
             $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            array_push($productAddedData, ['value' => $value->total, 'color' => $color, 'highlight' => $color, 'label' => $listProductName[$value->product_id]]);
+            array_push($productAmountData, ['value' => $value->phrase, 'color' => $color, 'highlight' => $color, 'label' => $value->phrase]);
         };
-        foreach ($productAmount as $value) {
-            $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            array_push($productAmountData, ['value' => $value->total, 'color' => $color, 'highlight' => $color, 'label' => $listProductName[$value->product_id]]);
-        };
-        foreach ($purchaseTime as $value) {
-            $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            array_push($purchaseTimeData, ['value' => $value->total, 'color' => $color, 'highlight' => $color, 'label' => $listProductName[$value->product_id]]);
-        };
-        foreach ($purchaseAmount as $value) {
-            $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            array_push($purchaseAmountData, ['value' => round($value->total,2), 'color' => $color, 'highlight' => $color, 'label' => $listProductName[$value->product_id]]);
-        };
+
         return response()->json(['success' => true,
-            'product_view' => $productAddedData,
-            'product_amount' => $productAmountData,
-            'purchase_time'=>$purchaseTimeData,
-            'purchase_amount'=>$purchaseAmountData
+            'product_amount' => $productAmountData
         ]);
     }
     public function getDashboard()
@@ -106,8 +72,21 @@ class ReportController extends Controller
         $shop = \ShopifyApp::shop();
         $configModel = $this->config;
 
-        $dataSearchQueries = $configModel->where(['result'=>'yes','shop_id'=>$shop->id])->paginate(10);
-        $dataSearchNoResult = $configModel->where(['result'=>' ','shop_id'=>$shop->id])->paginate(10);
+        //$dataSearchQueries = $configModel->where(['result'=>'yes','shop_id'=>$shop->id])->paginate(10);
+        $dataSearchQueries = DB::table('report_dashboard')
+            ->select('phrase','result',DB::raw('count(phrase) as total'))
+            ->where('shop_id', $shop->id)
+            ->where('result', 'yes')
+            ->groupBy('phrase')
+            ->get();
+
+        //$dataSearchNoResult = $configModel->where(['result'=>' ','shop_id'=>$shop->id])->paginate(10);
+        $dataSearchNoResult = DB::table('report_dashboard')
+            ->select('phrase','result',DB::raw('count(phrase) as total'))
+            ->where('shop_id', $shop->id)
+            ->where('result', ' ')
+            ->groupBy('phrase')
+            ->get();
 
         return view('welcome')->with(['dataSearchQueries'=>$dataSearchQueries,'dataSearchNoResult'=>$dataSearchNoResult]);;
 
@@ -125,17 +104,14 @@ class ReportController extends Controller
 
         $insertData = [];
         $currentDate = Carbon::now();
-        $dataConfig = $this->config::all();
 
-        foreach ($dataConfig as $value) {
-            dd($value);
-                if (in_array($value, $dataPhrase)) {
 
-                }
-
+        if($dataResults==null){
+            array_push($insertData,['phrase'=>$dataPhrase,'shop_id'=>$shop->id,'created_at'=>$currentDate]);
+        }else{
+            array_push($insertData,['phrase'=>$dataPhrase,'result'=>$dataResults,'shop_id'=>$shop->id,'created_at'=>$currentDate]);
         }
 
-        array_push($insertData,['phrase'=>$dataPhrase,'count'=>'9','result'=>$dataResults,'shop_id'=>$shop->id,'created_at'=>$currentDate]);
 
         DB::table('report_dashboard')->insert($insertData);
 
@@ -162,8 +138,6 @@ class ReportController extends Controller
         }
         return $returnData;
     }
-
-
 
 
     public function getGeneralData(Request $request)

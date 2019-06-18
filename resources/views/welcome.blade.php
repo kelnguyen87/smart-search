@@ -24,13 +24,12 @@
 
         <div class="row">
             <div class="col-sm-12 col-xs-12">
-                <div class="snize-graph-legend-item snize-total-searches cm-legend snize-current" id="legend_total_searches_chart">
-                    <div class="snize-graph-legend-item-label">Total searches</div>
-                    <div class="snize-graph-legend-item-value">0</div>
+                <div class="cavas_report">
+                    <canvas id="added-chart" style="height: 265px; width: 530px;" width="530" height="265"></canvas>
+                    <div>
+                        <ul id="added-chart-legend"></ul>
+                    </div>
                 </div>
-                <div id="content_chart" style="clear: both;"><div id="total_searches_chart" class="snize-analytics-chart" style="height: 250px"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 1359px; height: 250px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;" aria-label="A chart."><svg width="1359" height="250" aria-label="A chart." style="overflow: hidden;"><defs id="defs"><clipPath id="_ABSTRACT_RENDERER_ID_53"><rect x="30" y="20" width="1291" height="200"></rect></clipPath></defs><rect x="0" y="0" width="1359" height="250" stroke="none" stroke-width="0" fill="#ffffff"></rect><g><rect x="30" y="20" width="1291" height="200" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect><g clip-path="url(https://shopify-app.searchserverapi.com/admin#_ABSTRACT_RENDERER_ID_53)"><g><rect x="113" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="202" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="291" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="380" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="469" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="558" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="647" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="736" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="825" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="914" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="1003" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="1092" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="1181" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="1270" y="20" width="1" height="200" stroke="none" stroke-width="0" fill="#f0f0f0"></rect><rect x="30" y="20" width="1291" height="1" stroke="none" stroke-width="0" fill="#f0f0f0"></rect></g><g><rect x="30" y="219" width="1291" height="1" stroke="none" stroke-width="0" fill="#f0f0f0"></rect></g><g><path d="M30.5,219.5L74.98275862068965,219.5L119.4655172413793,219.5L163.94827586206895,219.5L208.4310344827586,219.5L252.91379310344826,219.5L297.3965517241379,219.5L341.87931034482756,219.5L386.3620689655172,219.5L430.84482758620686,219.5L475.3275862068965,219.5L519.8103448275862,219.5L564.2931034482758,219.5L608.7758620689655,219.5L653.2586206896551,219.5L697.7413793103448,219.5L742.2241379310344,219.5L786.7068965517241,219.5L831.1896551724137,219.5L875.6724137931034,219.5L920.155172413793,219.5L964.6379310344827,219.5L1009.1206896551723,219.5L1053.6034482758619,219.5L1098.0862068965516,219.5L1142.5689655172414,219.5L1187.051724137931,219.5L1231.5344827586207,219.5L1276.0172413793102,219.5L1320.5,219.5" stroke="#00bcd4" stroke-width="1.5" fill-opacity="1" fill="none"></path></g></g><g><circle cx="30.5" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="74.98275862068965" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="119.4655172413793" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="163.94827586206895" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="208.4310344827586" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="252.91379310344826" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="297.3965517241379" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="341.87931034482756" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="386.36206896551
-72" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="430.84482758620686" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="475.3275862068965" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="519.8103448275862" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="564.2931034482758" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="608.7758620689655" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="653.2586206896551" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="697.7413793103448" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="742.2241379310344" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="786.7068965517241" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="831.1896551724137" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="875.6724137931034" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="920.155172413793" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="964.6379310344827" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="1009.1206896551723" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="1053.6034482758619" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="1098.0862068965516" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="1142.5689655172414" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="1187.051724137931" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="1231.5344827586207" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="1276.0172413793102" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle><circle cx="1320.5" cy="219.5" r="4.5" stroke="none" stroke-width="0" fill="#00bcd4"></circle></g><g><g><text text-anchor="middle" x="113.9051724137931" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 3</text></g><g><text text-anchor="middle" x="202.8706896551724" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 5</text></g><g><text text-anchor="middle" x="291.8362068965517" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 7</text></g><g><text text-anchor="middle" x="380.801724137931" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 9</text></g><g><text text-anchor="middle" x="469.7672413793103" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 11</text></g><g><text text-anchor="middle" x="558.7327586206897" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 13</text></g><g><text text-anchor="middle" x="647.698275862069" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 15</text></g><g><text text-anchor="middle" x="736.6637931034483" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 17</text></g><g><text text-anchor="middle" x="825.6293103448276" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 19</text></g><g><text text-anchor="middle" x="914.5948275862069" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 21</text></g><g><text text-anchor="middle" x="1003.5603448275862" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 23</text></g><g><text text-anchor="middle" x="1092.5258620
-689654" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 25</text></g><g><text text-anchor="middle" x="1181.4913793103447" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 27</text></g><g><text text-anchor="middle" x="1270.456896551724" y="236.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">Jun 29</text></g><g><text text-anchor="end" x="19" y="24.35" font-family="Arial" font-size="11" stroke="none" stroke-width="0" fill="#9f9f9f">1</text></g></g></g><g></g></svg></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 260px; left: 1369px; white-space: nowrap; font-family: Arial; font-size: 11px;">0</div><div></div></div></div> </div>
             </div>
 
         </div>
@@ -55,7 +54,7 @@
                             @if( $dataSearchQueries )
                                 @php  $totalSearchQueries = 0; @endphp
                                 @foreach($dataSearchQueries as $value)
-                                    @php $totalSearchQueries +=  $value->count @endphp
+                                    @php $totalSearchQueries +=  $value->total @endphp
                                 @endforeach
                                 @foreach($dataSearchQueries as $value)
                                     <tr>
@@ -63,11 +62,11 @@
                                             {{$value->phrase}}
                                         </td>
                                         <td class="ls-name">
-                                            {{$value->count}}
+                                            {{$value->total}}
                                         </td>
                                         <td class="ls-type">
 
-                                            {{round(($value->count/$totalSearchQueries)*100 )}}%
+                                            {{round(($value->total/$totalSearchQueries)*100 )}}%
 
                                         </td>
 
@@ -109,7 +108,7 @@
 
                                 @php  $totalSearchNoResult = 0; @endphp
                                 @foreach($dataSearchNoResult as $value)
-                                    @php $totalSearchNoResult +=  $value->count @endphp
+                                    @php $totalSearchNoResult +=  $value->total @endphp
                                 @endforeach
                                 @foreach($dataSearchNoResult as $value)
                                     <tr>
@@ -117,11 +116,11 @@
                                             {{$value->phrase}}
                                         </td>
                                         <td class="ls-name">
-                                            {{$value->count}}
+                                            {{$value->total}}
                                         </td>
                                         <td class="ls-type">
 
-                                            {{round(($value->count/$totalSearchNoResult)*100 )}}%
+                                            {{round(($value->total/$totalSearchNoResult)*100 )}}%
 
                                         </td>
 
@@ -189,12 +188,95 @@
 
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                //fillter(start.format('DD-MM-YYYY'),end.format('DD-MM-YYYY'));
+                fillter(start.format('DD-MM-YYYY'),end.format('DD-MM-YYYY'));
             }
+            function fillLegend(i,val,id) {
+                $(id+'-legend').append($('<li>',{text: val.label}).append($('<i>',{class: 'fa fa-circle-o', style:'color:'+val.color})))
+            }
+
             function fillter(start,end) {
                 $('#in-progress').show();
+                //chart option
+                /*let pieOptions = {
+                    // Boolean - Whether we should show a stroke on each segment
+                    segmentShowStroke    : true,
+                    // String - The colour of each segment stroke
+                    segmentStrokeColor   : '#fff',
+                    // Number - The width of each segment stroke
+                    segmentStrokeWidth   : 1,
+                    // Number - The percentage of the chart that we cut out of the middle
+                    percentageInnerCutout: 50, // This is 0 for Pie charts
+                    // Number - Amount of animation steps
+                    animationSteps       : 100,
+                    // String - Animation easing effect
+                    animationEasing      : 'easeOutBounce',
+                    // Boolean - Whether we animate the rotation of the Doughnut
+                    animateRotate        : true,
+                    // Boolean - Whether we animate scaling the Doughnut from the centre
+                    animateScale         : false,
+                    // Boolean - whether to make the chart responsive to window resizing
+                    responsive           : true,
+                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                    maintainAspectRatio: false
+                };*/
+                var areaChartData = {
+                    labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    datasets: [
+
+                        {
+                            label               : 'Digital Goods',
+                            fillColor           : 'rgba(60,141,188,0.9)',
+                            strokeColor         : 'rgba(60,141,188,0.8)',
+                            pointColor          : '#3b8bba',
+                            pointStrokeColor    : 'rgba(60,141,188,1)',
+                            pointHighlightFill  : '#fff',
+                            pointHighlightStroke: 'rgba(60,141,188,1)',
+                            data                : [2, 29, 30, 31, 31, 31, 28]
+                        }
+                    ]
+                }
+
+                var pieOptions = {
+                    //Boolean - If we should show the scale at all
+                    showScale               : true,
+                    //Boolean - Whether grid lines are shown across the chart
+                    scaleShowGridLines      : true,
+                    //String - Colour of the grid lines
+                    scaleGridLineColor      : 'rgba(0,0,0,.05)',
+                    //Number - Width of the grid lines
+                    scaleGridLineWidth      : 1,
+                    //Boolean - Whether to show horizontal lines (except X axis)
+                    scaleShowHorizontalLines: true,
+                    //Boolean - Whether to show vertical lines (except Y axis)
+                    scaleShowVerticalLines  : true,
+                    //Boolean - Whether the line is curved between points
+                    bezierCurve             : true,
+                    //Number - Tension of the bezier curve between points
+                    bezierCurveTension      : 0.3,
+                    //Boolean - Whether to show a dot for each point
+                    pointDot                : true,
+                    //Number - Radius of each point dot in pixels
+                    pointDotRadius          : 4,
+                    //Number - Pixel width of point dot stroke
+                    pointDotStrokeWidth     : 1,
+                    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+                    pointHitDetectionRadius : 20,
+                    //Boolean - Whether to show a stroke for datasets
+                    datasetStroke           : true,
+                    //Number - Pixel width of dataset stroke
+                    datasetStrokeWidth      : 2,
+                    //Boolean - Whether to fill the dataset with a color
+                    datasetFill             : true,
+                    //String - A legend template
+
+
+                      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                      maintainAspectRatio     : true,
+                      //Boolean - whether to make the chart responsive to window resizing
+                      responsive              : true
+                    }
                 $.ajax({
-                    url: 'report/getGeneral',
+                    url: 'report/chartData',
                     type: 'GET',
                     data: {
                         start: start,
@@ -202,14 +284,18 @@
                     },
                     dataType: 'json',
                     success: function (response) {
-                        $('#total-view').text(response.view);
-                        $('#total-added-cart').text(response.added_cart);
-                        $('#total-conversion').text(response.conversion);
-                        $('#total-revenue').text(response.revenue);
-                        fillViewTable(response);
-                        fillConversionTable(response);
                         $('#in-progress').hide();
+                        //addedChartData = response.product_view;
+                        amountChartData = response.product_amount;
+
+                        var addedChartCanvas = $('#added-chart').get(0).getContext('2d');
+                        var addedChart = new Chart(addedChartCanvas);
+                        addedChart.Line(areaChartData, pieOptions);
+                        $.each(amountChartData, function (i, val) {
+                            fillLegend(i, val,'#added-chart');
+                        });
                     }
+
                 });
             }
             $('#reportrange').daterangepicker({

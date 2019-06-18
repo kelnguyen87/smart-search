@@ -16,6 +16,7 @@ Route::group(['middleware' => 'auth.shop'], function () {
 
     Route::get('/', 'ReportController@getDashboard')->name('home');
     //Route::get('report/getGeneral','ReportController@getGeneralData');
+    Route::get('report/chartData','ReportController@getProductChartData');
     Route::get('setting','SettingController@index');
     Route::post('setting/save','SettingController@save');
 

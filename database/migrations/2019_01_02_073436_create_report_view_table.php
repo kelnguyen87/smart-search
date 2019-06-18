@@ -16,7 +16,6 @@ class CreateReportViewTable extends Migration
         Schema::create('report_dashboard', function (Blueprint $table) {
             $table->increments('id');
             $table->string('phrase',255);
-            $table->unsignedInteger('count');
             $table->text('result');
             $table->unsignedInteger('shop_id');
             $table->timestamps();
