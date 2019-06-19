@@ -121,6 +121,8 @@ desired effect
             debug: false,
             forceRedirect: true
         });
+
+
     </script>
 
     @include('shopify-app::partials.flash_messages')

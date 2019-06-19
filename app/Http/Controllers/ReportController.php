@@ -40,18 +40,19 @@ class ReportController extends Controller
     public function getProductChartData(Request $request)
     {
         $shop = \ShopifyApp::shop();
-        $startDay = Carbon::parse($request->get('start'))->toDateTimeString();
+        $startDay = Carbon::parse($request->get('start'))->toDateString();
 
         Log::info('$startDay: '.$startDay);
-        $endDay = Carbon::parse($request->get('end'))->addDay()->toDateTimeString();
+        $endDay = Carbon::parse($request->get('end'))->addDay()->toDateString();
         Log::info('$endDay: '.$endDay);
 
 
         $viewDashboard = DB::table('report_dashboard')
-            ->select('phrase','result')
+            ->select( 'phrase','created_at', DB::raw('count(phrase) as total'))
             ->where('shop_id', $shop->id)
             ->where('created_at', '>=', $startDay)
             ->where('created_at', '<', $endDay)
+            ->groupBy('created_at')
             ->get();
 
 
@@ -60,7 +61,9 @@ class ReportController extends Controller
 
         foreach ($viewDashboard as $value) {
             $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            array_push($productAmountData, ['value' => $value->phrase, 'color' => $color, 'highlight' => $color, 'label' => $value->phrase]);
+            $created_at = date("d/m", strtotime($value->created_at));
+
+            array_push($productAmountData, ['value' => $value->total, 'color' => $color, 'highlight' => $color, 'label' =>$created_at]);
         };
 
         return response()->json(['success' => true,
@@ -78,7 +81,10 @@ class ReportController extends Controller
             ->where('shop_id', $shop->id)
             ->where('result', 'yes')
             ->groupBy('phrase')
+            ->orderBy('total', 'DESC')
+
             ->get();
+
 
         //$dataSearchNoResult = $configModel->where(['result'=>' ','shop_id'=>$shop->id])->paginate(10);
         $dataSearchNoResult = DB::table('report_dashboard')
@@ -86,7 +92,10 @@ class ReportController extends Controller
             ->where('shop_id', $shop->id)
             ->where('result', ' ')
             ->groupBy('phrase')
+            ->orderBy('total', 'DESC')
+
             ->get();
+
 
         return view('welcome')->with(['dataSearchQueries'=>$dataSearchQueries,'dataSearchNoResult'=>$dataSearchNoResult]);;
 
@@ -103,7 +112,7 @@ class ReportController extends Controller
         $shop = $shopModel::withTrashed()->firstOrCreate(['shopify_domain' => $domain]);
 
         $insertData = [];
-        $currentDate = Carbon::now();
+        $currentDate = Carbon::now()->toDateString();
 
 
         if($dataResults==null){
@@ -121,7 +130,8 @@ class ReportController extends Controller
     public function getProductName()
     {
         $shop = \ShopifyApp::shop();
-        $currency = $shop->api()->rest('POST', '/admin/api/2019-04/metafields.json')->body->shop->currency;
+        $metafield = ["name" => "inventory", "key" => "warehouse", "value" => "", "value_type"=> "json_string"];
+        $currency = $shop->api()->rest('POST', '/admin/api/2019-04/metafields.json',["metafield"=>$metafield]);
 
         $allInternalProduct = $this->product->all();
         $internalProducts = [];

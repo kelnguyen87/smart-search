@@ -48,7 +48,6 @@ class SettingController extends Controller
 
     public function index()
     {
-
         $shop = $this->shop->shop();
         $configModel = $this->config;
         $configData = [];
@@ -57,10 +56,11 @@ class SettingController extends Controller
             $configData[$value] = $configValue;
         }
 
-        $json_configData =json_encode($configData);
+
         $shopAPI = \ShopifyApp::shop();
-        $metafield = ["namespace" => "inventory", "key" => "warehouse", "value" => $json_configData, "value_type"=> "json_string"];
+        $metafield = ["namespace" => "inventory", "key" => "warehouse", "value" => $configData, "value_type"=> "string"];
         $shopAPI->api()->rest('POST', '/admin/api/2019-04/metafields.json',["metafield"=>$metafield]);
+        //$shopAPI->api()->rest('DELETE', '/admin/api/2019-04/metafields/8480560775242.json');
 
         return view('results.index')->with(['data'=>$configData]);
     }
@@ -74,9 +74,20 @@ class SettingController extends Controller
 
             $dataModel = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first() ?? new Config;
             $dataFill = $request->input($value) ?? '';
-            
+            //dd($request->input('general_product_price') );
             $dataModel->fill(['name'=>$value,'shop_id'=>$shop->id,'value'=>$dataFill])->save();
         }
+
+        $configData = [];
+        foreach (self::CONFIG_NAME as $value){
+            $configValue = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first()->value ?? '';
+            $configData[$value] = $configValue;
+        }
+
+        $shopAPI = \ShopifyApp::shop();
+        $metafield = ["id" => 8480560775242, "value" => $configData, "value_type"=> "string"];
+        $shopAPI->api()->rest('PUT', '/admin/api/2019-04/metafields/8480560775242.json',["metafield"=>$metafield]);
+
         return back()->with('status','Your settings have been successfully saved');
     }
 

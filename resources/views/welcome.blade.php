@@ -198,45 +198,47 @@
 
             function fillter(start,end) {
                 $('#in-progress').show();
-                //chart option
-                /*let pieOptions = {
-                    // Boolean - Whether we should show a stroke on each segment
-                    segmentShowStroke    : true,
-                    // String - The colour of each segment stroke
-                    segmentStrokeColor   : '#fff',
-                    // Number - The width of each segment stroke
-                    segmentStrokeWidth   : 1,
-                    // Number - The percentage of the chart that we cut out of the middle
-                    percentageInnerCutout: 50, // This is 0 for Pie charts
-                    // Number - Amount of animation steps
-                    animationSteps       : 100,
-                    // String - Animation easing effect
-                    animationEasing      : 'easeOutBounce',
-                    // Boolean - Whether we animate the rotation of the Doughnut
-                    animateRotate        : true,
-                    // Boolean - Whether we animate scaling the Doughnut from the centre
-                    animateScale         : false,
-                    // Boolean - whether to make the chart responsive to window resizing
-                    responsive           : true,
-                    // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                    maintainAspectRatio: false
-                };*/
-                var areaChartData = {
-                    labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                    datasets: [
 
-                        {
-                            label               : 'Digital Goods',
-                            fillColor           : 'rgba(60,141,188,0.9)',
-                            strokeColor         : 'rgba(60,141,188,0.8)',
-                            pointColor          : '#3b8bba',
-                            pointStrokeColor    : 'rgba(60,141,188,1)',
-                            pointHighlightFill  : '#fff',
-                            pointHighlightStroke: 'rgba(60,141,188,1)',
-                            data                : [2, 29, 30, 31, 31, 31, 28]
+
+                $.ajax({
+                    url: 'report/chartData',
+                    type: 'GET',
+                    data: {
+                        start: start,
+                        end: end
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+
+                        amountChartData = response.product_amount;
+                        var dataLabels = [];
+                        var datavalue = [];
+
+                        $.each(amountChartData, function() {
+                            dataLabels.push (this.label);
+                            datavalue.push (this.value)
+                        });
+
+
+                        var areaChartData = {
+                            labels  : dataLabels,
+                            datasets: [
+
+                                {
+                                    label               : 'Digital Goods',
+                                    fillColor           : 'rgba(60,141,188,0.9)',
+                                    strokeColor         : 'rgba(60,141,188,0.8)',
+                                    pointColor          : '#3b8bba',
+                                    pointStrokeColor    : 'rgba(60,141,188,1)',
+                                    pointHighlightFill  : '#fff',
+                                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                                    data                : datavalue
+                                }
+                            ]
                         }
-                    ]
-                }
+
+
+
 
                 var pieOptions = {
                     //Boolean - If we should show the scale at all
@@ -272,28 +274,20 @@
                     //String - A legend template
 
 
-                      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                      maintainAspectRatio     : true,
-                      //Boolean - whether to make the chart responsive to window resizing
-                      responsive              : true
-                    }
-                $.ajax({
-                    url: 'report/chartData',
-                    type: 'GET',
-                    data: {
-                        start: start,
-                        end: end
-                    },
-                    dataType: 'json',
-                    success: function (response) {
+                            //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                            maintainAspectRatio     : true,
+                            //Boolean - whether to make the chart responsive to window resizing
+                            responsive              : true
+                        }
+
                         $('#in-progress').hide();
                         //addedChartData = response.product_view;
-                        amountChartData = response.product_amount;
+
 
                         var addedChartCanvas = $('#added-chart').get(0).getContext('2d');
                         var addedChart = new Chart(addedChartCanvas);
                         addedChart.Line(areaChartData, pieOptions);
-                       /* $.each(amountChartData, function (i, val) {
+                        /*$.each(amountChartData, function (i, val) {
                             fillLegend(i, val,'#added-chart');
                         });*/
                     }
@@ -308,9 +302,9 @@
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+
                 }
+
             }, cb);
             cb(start, end);
         });
