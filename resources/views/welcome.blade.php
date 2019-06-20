@@ -9,15 +9,15 @@
                     <h2>Overview dashboard</h2>
                 </div>
                 <div class="col-sm-6 col-xs-12 text-right">
-                    <div class="fillter-group ">
+                    <!--<div class="fillter-group ">
                         <form>
-                            <!--<label>Date and time range:</label>-->
+                            <label>Date and time range:</label>
                             <div id="reportrange">
 
                                 <span></span> <i class="fa fa-caret-down"></i>
                             </div>
                         </form>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -149,44 +149,8 @@
     <script type="text/javascript">
         $(function () {
             var start = moment().subtract(7, 'days');
-
             var end = moment();
 
-            function fillViewTable(data) {
-                let lowest = data.lowestView;
-                let highest = data.highestView;
-                $('#highest-view-list').html('');
-                $.each(highest,function (i,val) {
-                    $('#highest-view-list').append($('<tr>')
-                        .append($('<td>',{text:val.offer_name}))
-                        .append($('<td>',{text:val.offer_view+' Views'}))
-                        .append($('<td>').append($('<a>',{text:' Edit', href:'/offer/edit/'+val.id}))));
-                });
-                $('#lowest-view-list').html('');
-                $.each(lowest,function (i,val) {
-                    $('#lowest-view-list').append($('<tr>')
-                        .append($('<td>',{text:val.offer_name}))
-                        .append($('<td>',{text:val.offer_view+' Views'}))
-                        .append($('<td>').append($('<a>',{text:' Edit', href:'/offer/edit/'+val.id}))));
-                });
-            }
-
-            function fillConversionTable(data) {
-                let lowest = data.lowestConversion;
-                let highest = data.highestConversion;
-                $('#highest-conversion-list').html('');
-                $.each(highest,function (i,val) {
-                    $('#highest-conversion-list').append($('<tr>')
-                        .append($('<td>',{text:val.offer_name}))
-                        .append($('<td>',{text:val.amount + '(' +val.conversion+' %)'})));
-                });
-                $('#lowest-conversion-list').html('');
-                $.each(lowest,function (i,val) {
-                    $('#lowest-conversion-list').append($('<tr>')
-                        .append($('<td>',{text:val.offer_name}))
-                        .append($('<td>',{text:val.amount + '(' +val.conversion+' %)'})));
-                });
-            }
 
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -211,34 +175,6 @@
                     success: function (response) {
 
                         amountChartData = response.product_amount;
-                        /*var dataLabels = [];
-                        var datavalue = [];
-
-                        $.each(amountChartData, function() {
-                            dataLabels.push (this.label);
-                            datavalue.push (this.value)
-                        });
-
-
-                        var areaChartData = {
-                            labels  : dataLabels,
-                            datasets: [
-
-                                {
-                                    label               : 'Digital Goods',
-                                    fillColor           : 'rgba(60,141,188,0.9)',
-                                    strokeColor         : 'rgba(60,141,188,0.8)',
-                                    pointColor          : '#3b8bba',
-                                    pointStrokeColor    : 'rgba(60,141,188,1)',
-                                    pointHighlightFill  : '#fff',
-                                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                                    data                : datavalue
-                                }
-                            ]
-                        }*/
-
-
-
 
                         let pieOptions = {
                             // Boolean - Whether we should show a stroke on each segment
@@ -283,7 +219,6 @@
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-
                 }
 
             }, cb);

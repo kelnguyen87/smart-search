@@ -57,6 +57,13 @@
                 </div>
 
                 <div class="form-group">
+                    {!! Form::label('showsku', 'Show reviews', ['class' => 'col-sm-2 control-label'] )  !!}
+                    <div class="col-sm-10">
+                        <div class="checkbox"><label>{!! Form::checkbox('general_product_reviews','yes', $data['general_product_reviews']) !!}</label></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     {!! Form::label('showsku', 'Show Description', ['class' => 'col-sm-2 control-label'] )  !!}
                     <div class="col-sm-10">
                         <div class="checkbox"><label>{!! Form::checkbox('general_product_derc','yes', $data['general_product_derc']) !!}</label></div>

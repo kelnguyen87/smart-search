@@ -16,6 +16,7 @@ class SettingController extends Controller
         'general_suggestion_derc'=>'general_suggestion_derc',
 
         'general_product_price'=>'general_product_price',
+        'general_product_reviews'=>'general_product_reviews',
         'general_product_derc'=>'general_product_derc',
         'general_product_per'=>'general_product_per',
         'general_product_title'=>'general_product_title',

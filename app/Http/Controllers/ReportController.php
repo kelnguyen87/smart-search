@@ -54,11 +54,16 @@ class ReportController extends Controller
 
         $productAmountData = [];
 
+        $total = 0;
+        foreach ($viewDashboard as $value) {
+            $total += $value->total;
+
+        }
 
         foreach ($viewDashboard as $value) {
             $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-
-            array_push($productAmountData, ['value' => $value->total, 'color' => $color, 'highlight' => $color, 'label' =>$value->phrase]);
+            $valuePercentages = round(($value->total/$total)*100, 2);
+            array_push($productAmountData, ['value' => $valuePercentages, 'color' => $color, 'highlight' => $color, 'label' =>$value->phrase]);
         };
 
         return response()->json(['success' => true,
@@ -70,7 +75,6 @@ class ReportController extends Controller
         $shop = \ShopifyApp::shop();
         $configModel = $this->config;
 
-        //$dataSearchQueries = $configModel->where(['result'=>'yes','shop_id'=>$shop->id])->paginate(10);
         $dataSearchQueries = DB::table('report_dashboard')
             ->select('phrase','result',DB::raw('count(phrase) as total'))
             ->where('shop_id', $shop->id)
@@ -81,7 +85,6 @@ class ReportController extends Controller
             ->get();
 
 
-        //$dataSearchNoResult = $configModel->where(['result'=>' ','shop_id'=>$shop->id])->paginate(10);
         $dataSearchNoResult = DB::table('report_dashboard')
             ->select('phrase','result',DB::raw('count(phrase) as total'))
             ->where('shop_id', $shop->id)
