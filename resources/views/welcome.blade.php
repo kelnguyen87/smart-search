@@ -9,7 +9,7 @@
                     <h2>Overview dashboard</h2>
                 </div>
                 <div class="col-sm-6 col-xs-12 text-right">
-                    <div class="fillter-group mb-20 ">
+                    <div class="fillter-group ">
                         <form>
                             <!--<label>Date and time range:</label>-->
                             <div id="reportrange">
@@ -40,7 +40,7 @@
                 <div class="box box-list">
                     <div class="offer-by-view-box box-body">
                         <div class="box-header">
-                            <h3 class="box-title">Top search queries</h3>
+                            <h3 class="box-title">Top 10 search queries with results</h3>
                         </div>
 
                         <table id="snize_table_top_search_queries" cellpadding="0" cellspacing="0" border="0" class="table table-striped snize-view snize-table-with-shadow">
@@ -68,7 +68,7 @@
                                         </td>
                                         <td class="ls-type">
 
-                                            {{round(($value->total/$totalSearchQueries)*100 )}}%
+                                            {{round(($value->total  /$totalSearchQueries)*100,2 )}}%
 
                                         </td>
 
@@ -94,7 +94,7 @@
                 <div class="box box-list">
                     <div class="offer-by-conversion-box box-body">
                         <div class="box-header">
-                            <h3 class="box-title">Top search with no results</h3>
+                            <h3 class="box-title">Top 10 search with no results</h3>
                         </div>
                         <table id="snize_table_top_no_results_search_queries" cellpadding="0" cellspacing="0" border="0" class="table table-striped snize-view snize-table-with-shadow">
                             <thead>
@@ -122,7 +122,7 @@
                                         </td>
                                         <td class="ls-type">
 
-                                            {{round(($value->total/$totalSearchNoResult)*100 )}}%
+                                            {{round(($value->total  /$totalSearchNoResult)*100,2)}}%
 
                                         </td>
 
@@ -211,7 +211,7 @@
                     success: function (response) {
 
                         amountChartData = response.product_amount;
-                        var dataLabels = [];
+                        /*var dataLabels = [];
                         var datavalue = [];
 
                         $.each(amountChartData, function() {
@@ -235,61 +235,42 @@
                                     data                : datavalue
                                 }
                             ]
-                        }
+                        }*/
 
 
 
 
-                var pieOptions = {
-                    //Boolean - If we should show the scale at all
-                    showScale               : true,
-                    //Boolean - Whether grid lines are shown across the chart
-                    scaleShowGridLines      : true,
-                    //String - Colour of the grid lines
-                    scaleGridLineColor      : 'rgba(0,0,0,.05)',
-                    //Number - Width of the grid lines
-                    scaleGridLineWidth      : 1,
-                    //Boolean - Whether to show horizontal lines (except X axis)
-                    scaleShowHorizontalLines: true,
-                    //Boolean - Whether to show vertical lines (except Y axis)
-                    scaleShowVerticalLines  : true,
-                    //Boolean - Whether the line is curved between points
-                    bezierCurve             : true,
-                    //Number - Tension of the bezier curve between points
-                    bezierCurveTension      : 0.3,
-                    //Boolean - Whether to show a dot for each point
-                    pointDot                : true,
-                    //Number - Radius of each point dot in pixels
-                    pointDotRadius          : 4,
-                    //Number - Pixel width of point dot stroke
-                    pointDotStrokeWidth     : 1,
-                    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-                    pointHitDetectionRadius : 20,
-                    //Boolean - Whether to show a stroke for datasets
-                    datasetStroke           : true,
-                    //Number - Pixel width of dataset stroke
-                    datasetStrokeWidth      : 2,
-                    //Boolean - Whether to fill the dataset with a color
-                    datasetFill             : true,
-                    //String - A legend template
-
-
-                            //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                            maintainAspectRatio     : true,
-                            //Boolean - whether to make the chart responsive to window resizing
-                            responsive              : true
-                        }
+                        let pieOptions = {
+                            // Boolean - Whether we should show a stroke on each segment
+                            segmentShowStroke    : true,
+                            // String - The colour of each segment stroke
+                            segmentStrokeColor   : '#fff',
+                            // Number - The width of each segment stroke
+                            segmentStrokeWidth   : 1,
+                            // Number - The percentage of the chart that we cut out of the middle
+                            percentageInnerCutout: 50, // This is 0 for Pie charts
+                            // Number - Amount of animation steps
+                            animationSteps       : 100,
+                            // String - Animation easing effect
+                            animationEasing      : 'easeOutBounce',
+                            // Boolean - Whether we animate the rotation of the Doughnut
+                            animateRotate        : true,
+                            // Boolean - Whether we animate scaling the Doughnut from the centre
+                            animateScale         : false,
+                            // Boolean - whether to make the chart responsive to window resizing
+                            responsive           : true,
+                            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                            maintainAspectRatio: false
+                        };
 
                         $('#in-progress').hide();
-                        //addedChartData = response.product_view;
-
 
                         var addedChartCanvas = $('#added-chart').get(0).getContext('2d');
                         var addedChart = new Chart(addedChartCanvas);
-                        addedChart.Line(areaChartData, pieOptions);
-                        /*$.each(amountChartData, function (i, val) {
+                        addedChart.Doughnut(amountChartData, pieOptions);
+                        $.each(amountChartData, function (i, val) {
                             fillLegend(i, val,'#added-chart');
-                        });*/
+                        });
                     }
 
                 });

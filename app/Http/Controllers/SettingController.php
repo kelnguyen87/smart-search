@@ -74,7 +74,7 @@ class SettingController extends Controller
 
             $dataModel = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first() ?? new Config;
             $dataFill = $request->input($value) ?? '';
-            
+
             $dataModel->fill(['name'=>$value,'shop_id'=>$shop->id,'value'=>$dataFill])->save();
         }
         return back()->with('status','Your settings have been successfully saved');

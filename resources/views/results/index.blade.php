@@ -4,7 +4,7 @@
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
-            <button type="button" class="close" data-dismiss="alert">×</button>
+            <button type="button" class="close" data-dismiss="alert">x</button>
         </div>
     @endif
     <div class="content-header ">
@@ -78,9 +78,9 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('perpage', 'Products per page', ['class' => 'col-sm-2 control-label'] )  !!}
+                    {!! Form::label('perpage', 'Products per row', ['class' => 'col-sm-2 control-label'] )  !!}
                     <div class="col-lg-10">
-                        {!!  Form::select('general_product_per', $perPage,  $data['general_product_per'], ['class' => 'form-control form-control-2x' ]) !!}
+                        {!!  Form::select('general_product_per', ['2' => '2 ', '3' => '3 ','4' => '4 ','5' => '5 '],  $data['general_product_per'], ['class' => 'form-control form-control-2x' ]) !!}
                     </div>
                 </div>
 

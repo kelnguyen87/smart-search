@@ -40,19 +40,15 @@ class ReportController extends Controller
     public function getProductChartData(Request $request)
     {
         $shop = \ShopifyApp::shop();
-        $startDay = Carbon::parse($request->get('start'))->toDateString();
-
-        Log::info('$startDay: '.$startDay);
-        $endDay = Carbon::parse($request->get('end'))->addDay()->toDateString();
-        Log::info('$endDay: '.$endDay);
 
 
         $viewDashboard = DB::table('report_dashboard')
-            ->select( 'phrase','created_at', DB::raw('count(phrase) as total'))
+            ->select('phrase','result',DB::raw('count(phrase) as total'))
             ->where('shop_id', $shop->id)
-            ->where('created_at', '>=', $startDay)
-            ->where('created_at', '<', $endDay)
-            ->groupBy('created_at')
+            ->where('result', 'yes')
+            ->groupBy('phrase')
+            ->orderBy('total', 'DESC')
+            ->limit(10)
             ->get();
 
 
@@ -61,9 +57,8 @@ class ReportController extends Controller
 
         foreach ($viewDashboard as $value) {
             $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            $created_at = date("d/m", strtotime($value->created_at));
 
-            array_push($productAmountData, ['value' => $value->total, 'color' => $color, 'highlight' => $color, 'label' =>$created_at]);
+            array_push($productAmountData, ['value' => $value->total, 'color' => $color, 'highlight' => $color, 'label' =>$value->phrase]);
         };
 
         return response()->json(['success' => true,
@@ -82,7 +77,7 @@ class ReportController extends Controller
             ->where('result', 'yes')
             ->groupBy('phrase')
             ->orderBy('total', 'DESC')
-
+            ->limit(10)
             ->get();
 
 
@@ -93,7 +88,7 @@ class ReportController extends Controller
             ->where('result', ' ')
             ->groupBy('phrase')
             ->orderBy('total', 'DESC')
-
+            ->limit(10)
             ->get();
 
 
