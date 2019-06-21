@@ -459,8 +459,7 @@ hr {
 
 }
 .cavas_report--main{
-    border-top: 3px solid #d2d6de;
-    background:white;
+    position: relative;
     display: block;
 }
 .product-list .btn-primary {
@@ -521,12 +520,14 @@ hr {
     z-index: 5;
     left:0;
     top:0;
+    padding: 0 10px;
     margin: 30px 0;
     text-transform: capitalize;
 }
 #added-chart-legend li{
-    line-height: 24px;
+    line-height: 26px;
 }
 #added-chart-legend li .fa{
     margin: 0 10px;
 }
+.small-box{padding:10px;}

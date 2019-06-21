@@ -45,7 +45,7 @@
                 @php
                     $perPage = ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10'];
                     $priceAction = ['show_zero_price' => 'Show zero price','hide_zero_price' => 'Hide zero price','show_custom_text' => 'Hide zero price, show text instead'];
-                    $sorting = ['relevance:desc' => 'Relevance','title:asc' => 'Title: A-Z','title:desc' => 'Title: Z-A','created:desc' => 'Date: New to Old','created:asc' => 'Date: Old to New','sales_amount:desc' => 'Bestselling'];
+                    $sorting = ['title:asc' => 'Title: A-Z','title:desc' => 'Title: Z-A','created:desc' => 'Date: New to Old','created:asc' => 'Date: Old to New','sales_amount:desc' => 'Bestselling'];
                 @endphp
 
 
@@ -97,7 +97,6 @@
                     {!! Form::label('forsample', 'Default sorting', ['class' => 'col-sm-2 control-label'] )  !!}
                     <div class="col-lg-10">
                         {!!  Form::select('general_product_sorting', $sorting,  $data['general_product_sorting'], ['class' => 'form-control form-control-2x' ]) !!}
-                        <p class="help-block">Please note that if the default sorting differs from "Relevance" it may result in showing results of low relevance on the 1st search results page. The reason is search results will no longer be sorted by relevance.</p>
                     </div>
                 </div>
 

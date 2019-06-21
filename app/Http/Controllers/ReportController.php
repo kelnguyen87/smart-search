@@ -48,22 +48,37 @@ class ReportController extends Controller
             ->where('result', 'yes')
             ->groupBy('phrase')
             ->orderBy('total', 'DESC')
-            ->limit(10)
+
             ->get();
 
 
         $productAmountData = [];
-
         $total = 0;
+        $autoChart= 0;
+        $valueTotal = 0;
+        $totalDashboard = count($viewDashboard);
         foreach ($viewDashboard as $value) {
             $total += $value->total;
 
         }
 
         foreach ($viewDashboard as $value) {
-            $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-            $valuePercentages = round(($value->total/$total)*100, 2);
-            array_push($productAmountData, ['value' => $valuePercentages, 'color' => $color, 'highlight' => $color, 'label' =>$value->phrase]);
+            $autoChart ++;
+            if($autoChart<=9){
+                $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+                $valuePercentages = round(($value->total/$total)*100, 2);
+                array_push($productAmountData, ['value' => $valuePercentages, 'color' => $color, 'highlight' => $color, 'label' =>$value->phrase]);
+            }else{
+                $valueTotal += $value->total;
+                if($autoChart===$totalDashboard) {
+                    //var_dump( $valueTotal,$total);
+                    $valueOtherPercentages = round(($valueTotal/$total)*100, 2);
+                    $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+                    array_push($productAmountData, ['value' => $valueOtherPercentages, 'color' => $color, 'highlight' => $color, 'label' => 'Other Phrase']);
+                }
+            }
+
+
         };
 
         return response()->json(['success' => true,
@@ -81,7 +96,7 @@ class ReportController extends Controller
             ->where('result', 'yes')
             ->groupBy('phrase')
             ->orderBy('total', 'DESC')
-            ->limit(10)
+
             ->get();
 
 
@@ -91,7 +106,7 @@ class ReportController extends Controller
             ->where('result', ' ')
             ->groupBy('phrase')
             ->orderBy('total', 'DESC')
-            ->limit(10)
+
             ->get();
 
 
