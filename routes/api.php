@@ -23,5 +23,5 @@ Route::post('/widget/cart_page','WidgetController@getCartWidget');
 Route::post('/tracking/add_cart','TrackingController@trackingAddToCartOffer');
 Route::post('shopifyflow/count-purchase','WebhookController@orderFulfilled');
 
-Route::post('/settingGeneral', 'SettingController@getSetting');
+Route::get('/getSearchFormData', 'SettingController@getSearchFormData');
 Route::post('/addSettingGeneral', 'ReportController@addGetSetting');

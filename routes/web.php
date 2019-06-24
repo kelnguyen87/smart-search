@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth.shop'], function () {
     Route::get('report/chartData','ReportController@getProductChartData');
     Route::get('setting','SettingController@index');
     Route::post('setting/save','SettingController@save');
+    Route::get('help','SettingController@getHelp');
 
 
     /*

@@ -48,7 +48,6 @@ class ReportController extends Controller
             ->where('result', 'yes')
             ->groupBy('phrase')
             ->orderBy('total', 'DESC')
-
             ->get();
 
 
@@ -71,7 +70,7 @@ class ReportController extends Controller
             }else{
                 $valueTotal += $value->total;
                 if($autoChart===$totalDashboard) {
-                    //var_dump( $valueTotal,$total);
+
                     $valueOtherPercentages = round(($valueTotal/$total)*100, 2);
                     $color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
                     array_push($productAmountData, ['value' => $valueOtherPercentages, 'color' => $color, 'highlight' => $color, 'label' => 'Other Phrase']);

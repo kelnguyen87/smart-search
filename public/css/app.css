@@ -12863,7 +12863,7 @@ table.text-center th {
 }
 
 .skin-blue .sidebar-menu > li.active > a {
-  border-left-color: #3c8dbc;
+  border-left-color: #9cdaff;
 }
 
 .skin-blue .sidebar-menu > li > .treeview-menu {
@@ -16453,9 +16453,6 @@ table.text-center th {
   margin-bottom: 5px;
 }
 
-.wrapper {
-  margin-top: 52px;
-}
 
 .content--main {
   padding: 2rem 3rem;
@@ -16476,11 +16473,7 @@ table.text-center th {
 .skin-blue .sidebar-menu > li.active > a,
 .skin-blue .sidebar-menu > li.menu-open > a {
   color: #fff;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.skin-blue .sidebar-menu > li.active > a {
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .skin-blue .sidebar a {
@@ -16494,7 +16487,7 @@ table.text-center th {
 .sidebar-menu > li > a > .fa,
 .sidebar-menu > li > a > .glyphicon,
 .sidebar-menu > li > a > .ion {
-  font-size: 20px;
+  font-size: 15px;
   width: 25px;
 }
 
@@ -16524,4 +16517,19 @@ table.text-center th {
   background: #F4F6F8;
   border-top: .1rem solid #dfe3e8;
 }
+.help-sections-container .help-section{
+  display: inline-block;
+  position: relative;
+  margin: 0 18px 18px 0;
+}
 
+.help-sections-container .help-section img{
+  width:220px;
+}
+.help-section .help-section-label {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+}

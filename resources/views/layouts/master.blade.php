@@ -53,15 +53,7 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-mini">
-<!-- Main Nav Top -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-full">
-        <button type="button" class="btn btn-default">Home</button>
-        <button type="button" class="btn btn-default btn-default--help">Help</button>
 
-
-    </div>
-</nav>
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -85,12 +77,11 @@ desired effect
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
                 <!-- Optionally, you can add icons to the links -->
-                <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}"><i class="ion ion-ios-information-outline"></i><span>Dashboard</span></a></li>
-                <li class="{{ Request::is('setting') ? 'active' : '' }}"><a href="{{ url('/setting') }}"><i class="ion ion-android-settings"></i><span>Settings</span></a></li>
-            <!--<li class="{{ Request::is('offer/list') ? 'active' : '' }}"><a href="{{ url('/offer/list') }}"><i class="ion ion-ios-analytics"></i><span>Analytics </span></a></li>-->
-                <!--<li class="{{ Request::is('report/index') ? 'active' : '' }}"><a href="{{ url('/report/index') }}"><i class="ion ion-ios-color-filter-outline"></i><span>Filter options</span></a></li>-->
-                <!--<li class="{{ Request::is('report/invoiceList') ? 'active' : '' }}"><a href="{{ url('/report/invoiceList') }}"><span>Invoices</span></a></li>-->
-            <!--<li class="{{ Request::is('plan/list') ? 'active' : '' }}"><a href="{{ url('/plan/list') }}">Price Plans</span></a></li>-->
+                <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
+                <li class="{{ Request::is('setting') ? 'active' : '' }}"><a href="{{ url('/setting') }}"><i class="fa fa-wrench"></i><span>Settings</span></a></li>
+                <li class="{{ Request::is('help') ? 'active' : '' }}"><a href="{{ url('/help') }}"><i class="fa fa-question-circle"></i><span>Help</span></a></li>
+
+
             </ul>
             <!-- /.sidebar-menu -->
         </section>

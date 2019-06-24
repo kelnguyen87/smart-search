@@ -66,6 +66,11 @@ class SettingController extends Controller
         return view('results.index')->with(['data'=>$configData]);
     }
 
+    /**
+     * save form search setting
+     * @param Request $request
+     * @return string
+     */
     public function save(Request $request)
     {
         $shop = $this->shop->shop();
@@ -81,25 +86,56 @@ class SettingController extends Controller
         return back()->with('status','Your settings have been successfully saved');
     }
 
+    public function getHelp()
+    {
+
+        return view('help');;
+
+
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getSetting(Request $request)
+
+    public function getSearchFormData(Request $request)
     {
+        //list variable
         $domain = $request->get('domain');
+        $term = $request->get('term');
         $shopModel = config('shopify-app.shop_model');
-        $configModel = $this->config;
         $shop = $shopModel::withTrashed()->firstOrCreate(['shopify_domain' => $domain]);
 
-        $configData = [];
-        foreach (self::CONFIG_NAME as $value){
-            $configValue = $configModel->where(['name'=>$value,'shop_id'=>$shop->id])->first()->value ?? '';
-            $configData[$value] = $configValue;
+        $popularSuggestions = $this->getSuggestions($shop,$term );
+
+
+        return response()->json(['success' => true, 'popularSuggestions' => $popularSuggestions]);
+    }
+
+    public function getSuggestions($shop,$dataPhrase )
+    {
+        /*$dataPhrase = 'Black';
+        $allProduct = $shop->api()->rest('GET', "/admin/api/2019-04/products.json?published_status=published?term=black")->body->products;
+        $returnData = [];
+        foreach ($allProduct as $value) {
+            if (strpos($value->title, $dataPhrase)!== false || strpos($value->body_html, $dataPhrase)!== false) {
+                $returnData[] = $value->title;
+            }
         }
+        sort($returnData);
+        return array_unique($returnData);*/
 
-        return response()->json(['success' => true, 'data' => $configData]);
+        $dataSearchQueries = DB::table('report_dashboard')
+            ->select('phrase',DB::raw('count(phrase) as total'))
+            ->where('shop_id', $shop->id)
+            ->where('result', 'yes')
+            ->where('phrase', 'like',   '%' . $dataPhrase . '%')
+            ->groupBy('phrase')
+            ->orderBy('total', 'DESC')
+            ->get();
 
+        return $dataSearchQueries;
     }
 
 
