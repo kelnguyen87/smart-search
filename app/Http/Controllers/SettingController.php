@@ -108,36 +108,52 @@ class SettingController extends Controller
         $shop = $shopModel::withTrashed()->firstOrCreate(['shopify_domain' => $domain]);
 
         $popularSuggestions = $this->getSuggestions($shop,$term );
+        $collections = $this->getCollections($shop,$term );
 
-
-        return response()->json(['success' => true, 'popularSuggestions' => $popularSuggestions]);
+        return response()->json(['success' => true, 'popularSuggestions' => $popularSuggestions, 'collections' => $collections]);
     }
 
     public function getSuggestions($shop,$dataPhrase )
     {
-        /*$dataPhrase = 'Black';
-        $allProduct = $shop->api()->rest('GET', "/admin/api/2019-04/products.json?published_status=published?term=black")->body->products;
-        $returnData = [];
-        foreach ($allProduct as $value) {
-            if (strpos($value->title, $dataPhrase)!== false || strpos($value->body_html, $dataPhrase)!== false) {
-                $returnData[] = $value->title;
-            }
-        }
-        sort($returnData);
-        return array_unique($returnData);*/
-
         $dataSearchQueries = DB::table('report_dashboard')
-            ->select('phrase',DB::raw('count(phrase) as total'))
+            ->select('phrase')
             ->where('shop_id', $shop->id)
             ->where('result', 'yes')
             ->where('phrase', 'like',   '%' . $dataPhrase . '%')
             ->groupBy('phrase')
-            ->orderBy('total', 'DESC')
             ->get();
-
         return $dataSearchQueries;
     }
 
+    public function getCollections($shop,$dataPhrase )
+    {
+        $allCollections = $shop->api()->rest('GET', "/admin/api/2019-04/custom_collections.json")->body->custom_collections;
+        $returnData = [];
+        foreach ($allCollections as $value) {
+            if (strpos($value->title, $dataPhrase)!== false || strpos($value->body_html, $dataPhrase)!== false) {
+                array_push($returnData, ['id' => $value->id, 'handle' => $value->handle, 'title' => $value->title]);
+            }
+        }
+        sort($returnData);
+        return array_unique($returnData);
+
+
+    }
+
+    /*public function getProduct($shop,$dataPhrase )
+    {
+        $allProduct = $shop->api()->rest('GET', "/admin/api/2019-04/products.json?published_status = published")->body->custom_collections;
+        $returnData = [];
+        foreach ($allProduct as $value) {
+            if (strpos($value->title, $dataPhrase)!== false || strpos($value->body_html, $dataPhrase)!== false) {
+                array_push($returnData, ['id' => $value->id, 'title' => $value->title, 'min_price' => $value->min_price, 'price' => $value->price,'description' => $value->body_html,'price' => $value->price]);
+            }
+        }
+        sort($returnData);
+        return array_unique($returnData);
+
+
+    }*/
 
 
 }
