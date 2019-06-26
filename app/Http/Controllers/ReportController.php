@@ -41,7 +41,6 @@ class ReportController extends Controller
     {
         $shop = \ShopifyApp::shop();
 
-
         $viewDashboard = DB::table('report_dashboard')
             ->select('phrase','result',DB::raw('count(phrase) as total'))
             ->where('shop_id', $shop->id)
@@ -84,10 +83,19 @@ class ReportController extends Controller
             'product_amount' => $productAmountData
         ]);
     }
+
+    public function  themeAssets(){
+        $shop = \ShopifyApp::shop();
+        $AssetApi = [ "key" => "templates/index.liquid", "value" => "{{ content_for_index }} <p>Hello kelnguyen</p>"];
+        $allAssets = $shop->api()->rest('PUT', '/admin/api/2019-04/themes/74023403594/assets.json',["asset"=>$AssetApi]);
+
+    }
+
     public function getDashboard()
     {
         $shop = \ShopifyApp::shop();
         $configModel = $this->config;
+        $this->themeAssets();
 
         $dataSearchQueries = DB::table('report_dashboard')
             ->select('phrase','result',DB::raw('count(phrase) as total'))

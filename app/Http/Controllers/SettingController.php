@@ -51,6 +51,7 @@ class SettingController extends Controller
     {
 
         $shop = $this->shop->shop();
+
         $configModel = $this->config;
         $configData = [];
         foreach (self::CONFIG_NAME as $value){
@@ -63,8 +64,10 @@ class SettingController extends Controller
         $metafield = ["namespace" => "inventory", "key" => "warehouse", "value" => $json_configData, "value_type"=> "json_string"];
         $shopAPI->api()->rest('POST', '/admin/api/2019-04/metafields.json',["metafield"=>$metafield]);
 
+
         return view('results.index')->with(['data'=>$configData]);
     }
+
 
     /**
      * save form search setting
@@ -88,10 +91,7 @@ class SettingController extends Controller
 
     public function getHelp()
     {
-
-        return view('help');;
-
-
+        return view('help');
     }
 
     /**
@@ -130,30 +130,15 @@ class SettingController extends Controller
         $allCollections = $shop->api()->rest('GET', "/admin/api/2019-04/custom_collections.json")->body->custom_collections;
         $returnData = [];
         foreach ($allCollections as $value) {
-            if (strpos($value->title, $dataPhrase)!== false || strpos($value->body_html, $dataPhrase)!== false) {
+            if (strpos($value->title, $dataPhrase)!== false ) {
                 array_push($returnData, ['id' => $value->id, 'handle' => $value->handle, 'title' => $value->title]);
             }
         }
-        sort($returnData);
-        return array_unique($returnData);
+
+
+        return $returnData;
 
 
     }
-
-    /*public function getProduct($shop,$dataPhrase )
-    {
-        $allProduct = $shop->api()->rest('GET', "/admin/api/2019-04/products.json?published_status = published")->body->custom_collections;
-        $returnData = [];
-        foreach ($allProduct as $value) {
-            if (strpos($value->title, $dataPhrase)!== false || strpos($value->body_html, $dataPhrase)!== false) {
-                array_push($returnData, ['id' => $value->id, 'title' => $value->title, 'min_price' => $value->min_price, 'price' => $value->price,'description' => $value->body_html,'price' => $value->price]);
-            }
-        }
-        sort($returnData);
-        return array_unique($returnData);
-
-
-    }*/
-
 
 }
