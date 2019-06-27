@@ -120,7 +120,8 @@
                             </thead>
 
                             <tbody>
-                            @if( $dataSearchQueries )
+                            @if(!$dataSearchQueries->isEmpty() )
+
                                 @php  $otherResult = 0; @endphp
                                 @foreach($dataSearchQueries as $value)
 
@@ -270,6 +271,7 @@
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
                 fillter(start.format('DD-MM-YYYY'),end.format('DD-MM-YYYY'));
             }
+
             function fillLegend(i,val,id) {
                 $(id+'-legend').append($('<li>',{text: val.label}).append($('<i>',{class: 'fa fa-circle-o', style:'color:'+val.color})))
             }

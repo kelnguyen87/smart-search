@@ -17,11 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//api for shopify front end fetch widget data
-/*Route::get('/widget/product_page','WidgetController@getWidget');
-Route::post('/widget/cart_page','WidgetController@getCartWidget');
-Route::post('/tracking/add_cart','TrackingController@trackingAddToCartOffer');
-Route::post('shopifyflow/count-purchase','WebhookController@orderFulfilled');*/
-
 Route::get('/getSearchFormData', 'SettingController@getSearchFormData');
 Route::post('/addSettingGeneral', 'ReportController@addGetSetting');

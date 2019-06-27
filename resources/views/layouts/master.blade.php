@@ -79,7 +79,7 @@ desired effect
                 <!-- Optionally, you can add icons to the links -->
                 <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
                 <li class="{{ Request::is('setting') ? 'active' : '' }}"><a href="{{ url('/setting') }}"><i class="fa fa-wrench"></i><span>Settings</span></a></li>
-                <li class="{{ Request::is('help') ? 'active' : '' }}"><a href="{{ url('/help') }}"><i class="fa fa-question-circle"></i><span>Help</span></a></li>
+                <li class="{{ Request::is('help') ? 'active' : '' }}"><a href="{{ url('/help') }}"><i class="fa fa-question-circle"></i><span>Helps</span></a></li>
 
 
             </ul>

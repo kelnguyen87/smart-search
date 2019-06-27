@@ -65,7 +65,7 @@ class SettingController extends Controller
         $shopAPI->api()->rest('POST', '/admin/api/2019-04/metafields.json',["metafield"=>$metafield]);
 
 
-        return view('results.index')->with(['data'=>$configData]);
+        return view('settings.index')->with(['data'=>$configData]);
     }
 
 
@@ -89,16 +89,20 @@ class SettingController extends Controller
         return back()->with('status','Your settings have been successfully saved');
     }
 
+    /**
+     *  View tab help
+     * @param
+     * @return view
+     */
     public function getHelp()
     {
-        return view('help');
+        return view('helps.index');
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-
     public function getSearchFormData(Request $request)
     {
         //list variable
@@ -113,6 +117,11 @@ class SettingController extends Controller
         return response()->json(['success' => true, 'popularSuggestions' => $popularSuggestions, 'collections' => $collections]);
     }
 
+    /**
+     *  Get  filter Suggestions
+     * @param $shop,$dataPhrase
+     * @return array
+     */
     public function getSuggestions($shop,$dataPhrase )
     {
         $dataSearchQueries = DB::table('report_dashboard')
@@ -125,6 +134,11 @@ class SettingController extends Controller
         return $dataSearchQueries;
     }
 
+    /**
+     *  Get  filter Collections
+     * @param $shop,$dataPhrase
+     * @return array
+     */
     public function getCollections($shop,$dataPhrase )
     {
         $allCollections = $shop->api()->rest('GET', "/admin/api/2019-04/custom_collections.json")->body->custom_collections;
