@@ -116,7 +116,7 @@ class ReportController extends Controller
     {
         $shop = \ShopifyApp::shop();
         $configModel = $this->config;
-        $this->themeAssets();
+        //$this->themeAssets();
 
         $dataSearchQueries = DB::table('report_dashboard')
             ->select('phrase','result',DB::raw('count(phrase) as total'))
@@ -170,5 +170,6 @@ class ReportController extends Controller
 
         return ['insertData'=>$insertData];
     }
+
 
 }

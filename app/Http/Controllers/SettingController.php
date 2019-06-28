@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Log;
 class SettingController extends Controller
 {
     const CONFIG_NAME = [
+        'general_suggestion_status'=>'general_suggestion_status',
+        'general_categories_status'=>'general_categories_status',
+        'general_articles_status'=>'general_articles_status',
         'general_suggestion_price'=>'general_suggestion_price',
         'general_suggestion_derc'=>'general_suggestion_derc',
 
@@ -113,6 +116,8 @@ class SettingController extends Controller
 
         $popularSuggestions = $this->getSuggestions($shop,$term );
         $collections = $this->getCollections($shop,$term );
+        $products = $this->getProduct($shop,$term );
+        $results_count = $this->getResultsCount($shop,$term );
 
         return response()->json(['success' => true, 'popularSuggestions' => $popularSuggestions, 'collections' => $collections]);
     }
@@ -144,13 +149,66 @@ class SettingController extends Controller
         $allCollections = $shop->api()->rest('GET', "/admin/api/2019-04/custom_collections.json")->body->custom_collections;
         $returnData = [];
         foreach ($allCollections as $value) {
-            if (strpos($value->title, $dataPhrase)!== false ) {
+            if (stripos($value->title, $dataPhrase)!== false ) {
                 array_push($returnData, ['id' => $value->id, 'handle' => $value->handle, 'title' => $value->title]);
             }
         }
 
 
         return $returnData;
+
+
+    }
+
+    /**
+     *  Get  filter Product
+     * @param $shop,$dataPhrase
+     * @return array
+     */
+    public function getProduct($shop,$dataPhrase )
+    {
+        $allProducts = $shop->api()->rest('GET', "/admin/api/2019-04/products.json?fields=id,image,title,body_html,handle,variants")->body->products;
+        $returnData = [];
+        $returnProduct = [];
+        $returnResults = [];
+        $itemCount = 0;
+        foreach ($allProducts as $value) {
+
+            if (stripos($value->title, $dataPhrase)!== false  ) {
+                $itemCount++;
+                $min_price = $value->variants[0]->price;
+                $price = $value->variants[0]->compare_at_price;
+                array_push($returnProduct, ['id' => $value->id,'image' => $value->image->src,'title' => $value->title, 'url' => '/products/'.$value->handle, 'body_html' => $value->body_html, 'min_price' => $min_price,'price' => $price]);
+                array_push($returnResults, ['results_count' => $itemCount]);
+
+            }
+        }
+
+
+        return $returnProduct;
+
+
+    }
+
+    /**
+     *  Get  filter Product
+     * @param $shop,$dataPhrase
+     * @return array
+     */
+    public function getResultsCount($shop,$dataPhrase )
+    {
+        $allProducts = $shop->api()->rest('GET', "/admin/api/2019-04/products.json?fields=id,image,title,body_html,handle,variants")->body->products;
+        $returnResults = [];
+        $itemCount = 0;
+        foreach ($allProducts as $value) {
+            if (stripos($value->title, $dataPhrase)!== false  ) {
+                $itemCount++;
+                array_push($returnResults, ['results_count' => $itemCount]);
+            }
+        }
+
+
+        return $returnResults;
 
 
     }

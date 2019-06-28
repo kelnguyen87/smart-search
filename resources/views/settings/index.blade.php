@@ -28,6 +28,27 @@
                     <h3>Search Suggestion</h3>
                 </div>
                 <div class="form-group">
+                    {!! Form::label('showprice', 'Show Section  suggestions', ['class' => 'col-sm-2 control-label'] )  !!}
+                    <div class="col-sm-10">
+                        <div class="checkbox"><label>{!! Form::checkbox('general_suggestion_status','yes', $data['general_suggestion_status']) !!}</label></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('showprice', 'Show Section  Collections', ['class' => 'col-sm-2 control-label'] )  !!}
+                    <div class="col-sm-10">
+                        <div class="checkbox"><label>{!! Form::checkbox('general_categories_status','yes', $data['general_categories_status']) !!}</label></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('showprice', 'Show Section  Articles', ['class' => 'col-sm-2 control-label'] )  !!}
+                    <div class="col-sm-10">
+                        <div class="checkbox"><label>{!! Form::checkbox('general_articles_status','yes', $data['general_articles_status']) !!}</label></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     {!! Form::label('showprice', 'Show price', ['class' => 'col-sm-2 control-label'] )  !!}
                     <div class="col-sm-10">
                         <div class="checkbox"><label>{!! Form::checkbox('general_suggestion_price','yes', $data['general_suggestion_price']) !!}</label></div>
@@ -39,6 +60,9 @@
                         <div class="checkbox"><label>{!! Form::checkbox('general_suggestion_derc','yes', $data['general_suggestion_derc']) !!}</label></div>
                     </div>
                 </div>
+
+
+
                 <div class="wrap-header2">
                     <h3>Search Result</h3>
                 </div>
