@@ -72,21 +72,15 @@
                     $sorting = ['title:asc' => 'Title: A-Z','title:desc' => 'Title: Z-A','created:desc' => 'Date: New to Old','created:asc' => 'Date: Old to New','sales_amount:desc' => 'Bestselling'];
                 @endphp
 
-
+                
                 <div class="form-group">
-                    {!! Form::label('showprice', 'Show price', ['class' => 'col-sm-2 control-label'] )  !!}
-                    <div class="col-sm-10">
-                        <div class="checkbox"><label>{!! Form::checkbox('general_product_price','yes', $data['general_product_price']) !!}</label></div>
+                    {!! Form::label('Maxtitle', 'Show Title', ['class' => 'col-sm-2 control-label'] )  !!}
+                    <div class="col-lg-10">
+                        <div class="checkbox"><label>{!! Form::checkbox('general_product_title','yes', $data['general_product_title']) !!}</label></div>
+                        
                     </div>
                 </div>
-
-                <div class="form-group">
-                    {!! Form::label('showsku', 'Show reviews', ['class' => 'col-sm-2 control-label'] )  !!}
-                    <div class="col-sm-10">
-                        <div class="checkbox"><label>{!! Form::checkbox('general_product_reviews','yes', $data['general_product_reviews']) !!}</label></div>
-                    </div>
-                </div>
-
+                
                 <div class="form-group">
                     {!! Form::label('showsku', 'Show Description', ['class' => 'col-sm-2 control-label'] )  !!}
                     <div class="col-sm-10">
@@ -94,10 +88,27 @@
                     </div>
                 </div>
 
+                
                 <div class="form-group">
-                    {!! Form::label('Maxtitle', 'Max title strings', ['class' => 'col-sm-2 control-label'] )  !!}
+                    {!! Form::label('showprice', 'Show price', ['class' => 'col-sm-2 control-label'] )  !!}
+                    <div class="col-sm-10">
+                        <div class="checkbox"><label>{!! Form::checkbox('general_product_price','yes', $data['general_product_price']) !!}</label></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('showsku', 'Show reviews', ['class' => 'col-sm-2 control-label'] )  !!}
+                    <div class="col-sm-10">
+                        <div class="checkbox"><label>{!! Form::checkbox('general_product_reviews','yes', $data['general_product_reviews']) !!}</label></div>
+                    </div>
+                </div>
+
+               
+
+                <div class="form-group">
+                    {!! Form::label('forsample', 'Show vendor', ['class' => 'col-sm-2 control-label'] )  !!}
                     <div class="col-lg-10">
-                        {!!  Form::select('general_product_title', $perPage,  $data['general_product_title'], ['class' => 'form-control form-control-2x' ]) !!}
+                    <div class="checkbox"><label>{!! Form::checkbox('general_product_vendor','yes', $data['general_product_vendor']) !!}</label></div>
+                        
                     </div>
                 </div>
 
@@ -117,12 +128,7 @@
 
 
 
-                <div class="form-group">
-                    {!! Form::label('forsample', 'Default sorting', ['class' => 'col-sm-2 control-label'] )  !!}
-                    <div class="col-lg-10">
-                        {!!  Form::select('general_product_sorting', $sorting,  $data['general_product_sorting'], ['class' => 'form-control form-control-2x' ]) !!}
-                    </div>
-                </div>
+               
 
 
 

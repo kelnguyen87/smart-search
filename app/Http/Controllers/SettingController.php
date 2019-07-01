@@ -24,7 +24,7 @@ class SettingController extends Controller
         'general_product_per'=>'general_product_per',
         'general_product_title'=>'general_product_title',
         'general_product_button'=>'general_product_button',
-        'general_product_sorting'=>'general_product_sorting',
+        'general_product_vendor'=>'general_product_vendor',
 
     ];
     /**
@@ -110,16 +110,16 @@ class SettingController extends Controller
     {
         //list variable
         $domain = $request->get('domain');
-        $term = $request->get('term');
+        //$term = $request->get('term');
         $shopModel = config('shopify-app.shop_model');
         $shop = $shopModel::withTrashed()->firstOrCreate(['shopify_domain' => $domain]);
 
-        $popularSuggestions = $this->getSuggestions($shop,$term );
-        $collections = $this->getCollections($shop,$term );
-        $products = $this->getProduct($shop,$term );
-        $results_count = $this->getResultsCount($shop,$term );
+        $popularSuggestions = $this->getSuggestions($shop );
+        $collections = $this->getCollections($shop );
+        //$products = $this->getProduct($shop,$term );
+       // $results_count = $this->getResultsCount($shop,$term );
 
-        return response()->json(['success' => true, 'popularSuggestions' => $popularSuggestions, 'collections' => $collections]);
+        return response()->json(['success' => true, 'popularSuggestions' => $popularSuggestions,'collections' => $collections]);
     }
 
     /**
@@ -127,13 +127,12 @@ class SettingController extends Controller
      * @param $shop,$dataPhrase
      * @return array
      */
-    public function getSuggestions($shop,$dataPhrase )
+    public function getSuggestions($shop )
     {
         $dataSearchQueries = DB::table('report_dashboard')
             ->select('phrase')
             ->where('shop_id', $shop->id)
             ->where('result', 'yes')
-            ->where('phrase', 'like',   '%' . $dataPhrase . '%')
             ->groupBy('phrase')
             ->get();
         return $dataSearchQueries;
@@ -144,73 +143,17 @@ class SettingController extends Controller
      * @param $shop,$dataPhrase
      * @return array
      */
-    public function getCollections($shop,$dataPhrase )
+    public function getCollections($shop )
     {
         $allCollections = $shop->api()->rest('GET', "/admin/api/2019-04/custom_collections.json")->body->custom_collections;
         $returnData = [];
         foreach ($allCollections as $value) {
-            if (stripos($value->title, $dataPhrase)!== false ) {
                 array_push($returnData, ['id' => $value->id, 'handle' => $value->handle, 'title' => $value->title]);
-            }
         }
-
 
         return $returnData;
-
-
     }
 
-    /**
-     *  Get  filter Product
-     * @param $shop,$dataPhrase
-     * @return array
-     */
-    public function getProduct($shop,$dataPhrase )
-    {
-        $allProducts = $shop->api()->rest('GET', "/admin/api/2019-04/products.json?fields=id,image,title,body_html,handle,variants")->body->products;
-        $returnData = [];
-        $returnProduct = [];
-        $returnResults = [];
-        $itemCount = 0;
-        foreach ($allProducts as $value) {
 
-            if (stripos($value->title, $dataPhrase)!== false  ) {
-                $itemCount++;
-                $min_price = $value->variants[0]->price;
-                $price = $value->variants[0]->compare_at_price;
-                array_push($returnProduct, ['id' => $value->id,'image' => $value->image->src,'title' => $value->title, 'url' => '/products/'.$value->handle, 'body_html' => $value->body_html, 'min_price' => $min_price,'price' => $price]);
-                array_push($returnResults, ['results_count' => $itemCount]);
-
-            }
-        }
-
-
-        return $returnProduct;
-
-
-    }
-
-    /**
-     *  Get  filter Product
-     * @param $shop,$dataPhrase
-     * @return array
-     */
-    public function getResultsCount($shop,$dataPhrase )
-    {
-        $allProducts = $shop->api()->rest('GET', "/admin/api/2019-04/products.json?fields=id,image,title,body_html,handle,variants")->body->products;
-        $returnResults = [];
-        $itemCount = 0;
-        foreach ($allProducts as $value) {
-            if (stripos($value->title, $dataPhrase)!== false  ) {
-                $itemCount++;
-                array_push($returnResults, ['results_count' => $itemCount]);
-            }
-        }
-
-
-        return $returnResults;
-
-
-    }
 
 }

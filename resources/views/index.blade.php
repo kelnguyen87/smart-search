@@ -85,7 +85,7 @@
                     <div class="box-body">
                         <div class="box-header ui-sortable-handle" style="cursor: move;">
 
-                            <h3 class="box-title">Top Search queries with results</h3>
+                            <h3 class="box-title">Chart  Search queries with results</h3>
 
                         </div>
                         <div class="cavas_report--main">
