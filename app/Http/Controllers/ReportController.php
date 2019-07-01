@@ -90,21 +90,23 @@ class ReportController extends Controller
     }
 
     /**
-     * API to edit liquid
+     * Creates an asset for a theme.
      * @param
      * @return json
      */
-    public function  themeAssets(){
+    public function  createsAssets($folderName,$fileName,$Delete = true){
         $shop = \ShopifyApp::shop();
 
+        //upload the metafield to assets
+        $AssetApi = [ "key" => "assets/".$fileName, "src" => "http://ibigecommerce.com/shopify/".$fileName];
+        $allAssets = $shop->api()->rest('PUT', '/admin/api/2019-04/themes/74304454730/assets.json',["asset"=>$AssetApi]);
 
-        /*$templatesIndexValue = $shop->api()->rest('GET', '/admin/api/2019-04/themes/74304454730/assets.json?asset[key]=layout/theme.liquid')->body->asset->value;
+        //Duplicate metafield
+        $AssetMetafield = [ "key" => $folderName."/".$fileName, "source_key" => "assets/".$fileName];
+        $allAssets = $shop->api()->rest('PUT', '/admin/api/2019-04/themes/74304454730/assets.json',["asset"=>$AssetMetafield]);
 
-        $AssetApi = [ "key" => "layout/theme.liquid", "value" => "$templatesIndexValue <p>hoten: luannt</p>"];
-
-        $allAssets = $shop->api()->rest('PUT', '/admin/api/2019-04/themes/74304454730/assets.json',["asset"=>$AssetApi]);*/
-
-
+        //Delete The metafield assets
+        if($Delete) $shop->api()->rest('DELETE', '/admin/api/2019-04/themes/74304454730/assets.json?asset[key]=assets/'.$fileName);
     }
 
     /**
@@ -116,7 +118,29 @@ class ReportController extends Controller
     {
         $shop = \ShopifyApp::shop();
         $configModel = $this->config;
-        //$this->themeAssets();
+
+        /*
+         * Creates an asset for a theme.
+         */
+        //1.file assets/smart-search.scss.liquid
+        $this->createsAssets('assets','smart-search.scss.liquid',false);
+
+        //2.file snippets/metafield.liquid
+        $this->createsAssets('snippets','metafield.liquid');
+
+        //3.file snippets/metafield.liquid
+        $this->createsAssets('snippets','product-card-grid-search.liquid');
+
+        //4.file snippets/ss-autosearch.liquid
+        $this->createsAssets('snippets','ss-autosearch.liquid');
+
+        //5.file templates/metafield.liquid
+        $this->createsAssets('templates','search.json.liquid');
+
+        //Create a new script tag
+        $AssetScript  = [ "event" => "onload", "src" => "https://cdnjs.cloudflare.com/ajax/libs/simplebar/4.0.0/simplebar.js"];
+
+        $shop->api()->rest('POST', '/admin/api/2019-04/script_tags.json',["script_tag"=>$AssetScript]);
 
         $dataSearchQueries = DB::table('report_dashboard')
             ->select('phrase','result',DB::raw('count(phrase) as total'))

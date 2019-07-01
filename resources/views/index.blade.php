@@ -320,6 +320,7 @@
                         var addedChartCanvas = $('#added-chart').get(0).getContext('2d');
                         var addedChart = new Chart(addedChartCanvas);
                         addedChart.Doughnut(amountChartData, pieOptions);
+
                         $.each(amountChartData, function (i, val) {
                             fillLegend(i, val,'#added-chart');
                         });
