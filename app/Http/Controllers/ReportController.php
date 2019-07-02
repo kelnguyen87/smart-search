@@ -126,7 +126,7 @@ class ReportController extends Controller
         $this->createsAssets('assets','smart-search.scss.liquid',false);
 
         //2.file snippets/metafield.liquid
-        $this->createsAssets('snippets','metafield.liquid');
+       /* $this->createsAssets('snippets','metafield.liquid');
 
         //3.file snippets/metafield.liquid
         $this->createsAssets('snippets','product-card-grid-search.liquid');
@@ -135,12 +135,11 @@ class ReportController extends Controller
         $this->createsAssets('snippets','ss-autosearch.liquid');
 
         //5.file templates/metafield.liquid
-        $this->createsAssets('templates','search.json.liquid');
+        $this->createsAssets('templates','search.json.liquid');*/
 
         //Create a new script tag
-        $AssetScript  = [ "event" => "onload", "src" => "https://cdnjs.cloudflare.com/ajax/libs/simplebar/4.0.0/simplebar.js"];
-
-        $shop->api()->rest('POST', '/admin/api/2019-04/script_tags.json',["script_tag"=>$AssetScript]);
+        /*$AssetScript  = [ "event" => "onload", "src" => "https://cdnjs.cloudflare.com/ajax/libs/simplebar/4.0.0/simplebar.js"];
+        $shop->api()->rest('POST', '/admin/api/2019-04/script_tags.json',["script_tag"=>$AssetScript]);*/
 
         $dataSearchQueries = DB::table('report_dashboard')
             ->select('phrase','result',DB::raw('count(phrase) as total'))
