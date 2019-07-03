@@ -52,9 +52,7 @@ class SettingController extends Controller
 
     public function index()
     {
-
         $shop = $this->shop->shop();
-
         $configModel = $this->config;
         $configData = [];
         foreach (self::CONFIG_NAME as $value){
@@ -62,6 +60,7 @@ class SettingController extends Controller
             $configData[$value] = $configValue;
         }
 
+        //Post API metafield
         $json_configData =json_encode($configData);
         $shopAPI = \ShopifyApp::shop();
         $metafield = ["namespace" => "inventory", "key" => "warehouse", "value" => $json_configData, "value_type"=> "json_string"];

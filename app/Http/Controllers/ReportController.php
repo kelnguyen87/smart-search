@@ -123,7 +123,7 @@ class ReportController extends Controller
          * Creates an asset for a theme.
          */
         //1.file assets/smart-search.scss.liquid
-        $this->createsAssets('assets','smart-search.scss.liquid',false);
+        //$this->createsAssets('assets','smart-search.scss.liquid',false);
 
         //2.file snippets/metafield.liquid
        /* $this->createsAssets('snippets','metafield.liquid');
