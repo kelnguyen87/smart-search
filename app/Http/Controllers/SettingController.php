@@ -147,7 +147,7 @@ class SettingController extends Controller
         $allCollections = $shop->api()->rest('GET', "/admin/api/2019-04/custom_collections.json")->body->custom_collections;
         $returnData = [];
         foreach ($allCollections as $value) {
-                array_push($returnData, ['id' => $value->id, 'handle' => $value->handle, 'title' => $value->title]);
+                array_push($returnData, ['id' => $value->id, 'handle' => $value->handle, 'title' => strtolower($value->title)]);
         }
 
         return $returnData;
